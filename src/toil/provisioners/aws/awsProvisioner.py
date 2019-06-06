@@ -228,9 +228,9 @@ class AWSProvisioner(AbstractProvisioner):
             # the root volume
             disk = self._nodeStorageOverrides.get(nodeType, self._nodeStorage) * 2 ** 30
 
-        #Underestimate memory by 100M to prevent autoscaler from disagreeing with
+        #Underestimate memory by 20% to prevent autoscaler from disagreeing with
         #mesos about whether a job can run on a particular node type
-        memory = (instanceType.memory - 0.1) * 2** 30
+        memory = (instanceType.memory * 0.80) * 2** 30
         return Shape(wallTime=60 * 60,
                      memory=memory,
                      cores=instanceType.cores,
