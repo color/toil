@@ -114,6 +114,8 @@ print(heredoc('''
     ADD waitForKey.sh /usr/bin/waitForKey.sh
 
     ADD customDockerInit.sh /usr/bin/customDockerInit.sh
+    
+    ADD docker-credential-ecr-login /usr/bin/docker-credential-ecr-login
 
     RUN chmod 777 /usr/bin/waitForKey.sh && chmod 777 /usr/bin/customDockerInit.sh
     
