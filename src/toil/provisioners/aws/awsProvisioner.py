@@ -306,7 +306,7 @@ class AWSProvisioner(AbstractProvisioner):
     def terminateNodes(self, nodes):
         self._terminateIDs([x.name for x in nodes])
 
-    def addNodes(self, nodeType, numNodes, preemptable, spotBid=None):
+    def addNodes(self, nodeType, numNodes, preemptable, spotBid=None, zoneSubnetOverride=None):
         assert self._leaderPrivateIP
         if preemptable and not spotBid:
             if self._spotBidsMap and nodeType in self._spotBidsMap:
@@ -328,8 +328,8 @@ class AWSProvisioner(AbstractProvisioner):
                   'user_data': userData,
                   'block_device_map': bdm,
                   'instance_profile_arn': self._leaderProfileArn,
-                  'placement': self._zone,
-                  'subnet_id': self._subnetID}
+                  'placement': zoneSubnetOverride[0] if zoneSubnetOverride else self._zone,
+                  'subnet_id': zoneSubnetOverride[1] if zoneSubnetOverride else self._subnetID}
 
         instancesLaunched = []
         numNodes = min(25, numNodes)  # Cap max number of nodes that can be launched at the same time to 25.
@@ -344,7 +344,7 @@ class AWSProvisioner(AbstractProvisioner):
                                                                   spec=kwargs, num_instances=numNodes)
                 else:
                     logger.debug('Launching %s preemptable nodes', numNodes)
-                    kwargs['placement'] = getSpotZone(spotBid, instanceType.name, self._ctx)
+                    # kwargs['placement'] = getSpotZone(spotBid, instanceType.name, self._ctx)
                     # force generator to evaluate
                     instancesLaunched = list(create_spot_instances(ec2=self._ctx.ec2,
                                                                    price=spotBid,

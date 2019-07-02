@@ -174,13 +174,14 @@ class AbstractProvisioner(with_metaclass(ABCMeta, object)):
         raise NotImplementedError
 
     @abstractmethod
-    def addNodes(self, nodeType, numNodes, preemptable, spotBid=None):
+    def addNodes(self, nodeType, numNodes, preemptable, spotBid=None, zoneSubnetOverride=None):
         """
         Used to add worker nodes to the cluster
 
         :param numNodes: The number of nodes to add
         :param preemptable: whether or not the nodes will be preemptable
         :param spotBid: The bid for preemptable nodes if applicable (this can be set in config, also).
+        :param zoneSubnetOverride: If specified, the (zone, vpcSubnet) tuple will override the default config.
         :return: number of nodes successfully added
         """
         raise NotImplementedError

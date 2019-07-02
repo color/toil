@@ -76,6 +76,7 @@ class Config(object):
         self.provisioner = None
         self.nodeTypes = []
         checkValidNodeTypes(self.provisioner, self.nodeTypes)
+        self.workerZonesAndSubnets = []
         self.nodeOptions = None
         self.minNodes = None
         self.maxNodes = [10]
@@ -222,6 +223,7 @@ class Config(object):
         # Autoscaling options
         setOption("provisioner")
         setOption("nodeTypes", parseStrList)
+        setOption("workerZonesAndSubnets", parseStrList)
         setOption("nodeOptions")
         setOption("minNodes", parseIntList)
         setOption("maxNodes", parseIntList)
@@ -415,6 +417,11 @@ def _addOptions(addGroupFn, config):
                      "preemptable nodes of that type will be preferred when creating "
                      "new nodes once the maximum number of preemptable-nodes has been"
                      "reached.")
+    addOptionFn('--workerZonesAndSubnets', default=None,
+                help="(optional) Comma separated list of zone:vpcSubnet IDs used when adding nodes "
+                     "to the cluster. If not provided, the same zone/vpcSubnet as the leader is "
+                     "used. If provided, one of the zone/vpcSubnet from this list will randomly "
+                     "be chosen at each autoscaler scaling interval.")
 
     addOptionFn('--nodeOptions', default=None,
                 help = "Options for provisioning the nodes. The syntax "
