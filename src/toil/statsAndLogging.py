@@ -96,7 +96,7 @@ class StatsAndLogging( object ):
     @classmethod
     def writeLogFiles(cls, jobNames, jobLogList, config, failed=False):
         def createName(logPath, jobName, logExtension, failed=False):
-            logName = jobName.replace('-', '--')
+            logName = jobName.replace('file:///', '').replace('-', '--')
             logName = logName.replace('/', '-')
             logName = logName.replace(' ', '_')
             logName = logName.replace("'", '')
