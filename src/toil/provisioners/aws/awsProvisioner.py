@@ -650,10 +650,6 @@ class AWSProvisioner(AbstractProvisioner):
         else:
             for attempt in old_retry(predicate=groupNotFound, timeout=300):
                 with attempt:
-                    # open port 22 for ssh-ing
-                    web.authorize(ip_protocol='tcp', from_port=22, to_port=22, cidr_ip='0.0.0.0/0')
-            for attempt in old_retry(predicate=groupNotFound, timeout=300):
-                with attempt:
                     # the following authorizes all TCP access within the web security group
                     web.authorize(ip_protocol='tcp', from_port=0, to_port=65535, src_group=web)
             for attempt in old_retry(predicate=groupNotFound, timeout=300):

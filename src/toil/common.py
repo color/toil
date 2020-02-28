@@ -1302,7 +1302,7 @@ class ToilMetrics:
         requests.post(
             'http://localhost:3000/api/datasources',
             auth=('admin', 'admin'),
-            data='{"name":"DS_PROMETHEUS","type":"prometheus", "url":"http://localhost:9090", "access":"direct"}',
+            data='{"name":"DS_PROMETHEUS","type":"prometheus", "url":"/", "access":"direct"}',
             headers={'content-type': 'application/json', "access": "direct"}
         )
 
