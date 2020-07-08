@@ -88,6 +88,8 @@ class FailedJobsException(Exception):
         except:
             logger.exception('Exception when compiling information about failed jobs')
         self.msg = self.msg.rstrip('\n')
+        if len(self.msg) > 1000:
+            self.msg = self.msg[:500] + '\n...TRUNCATED...\n' + self.msg[-500:]
         super().__init__()
         self.jobStoreLocator = jobStoreLocator
         self.numberOfFailedJobs = len(failedJobs)
