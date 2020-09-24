@@ -640,6 +640,7 @@ def main(argv=None):
     #Load the jobStore/config file
     ##########################################
 
+    setLogLevel('INFO')
     jobStore = Toil.resumeJobStore(options.jobStoreLocator)
     config = jobStore.config
     

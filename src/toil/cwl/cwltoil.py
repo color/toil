@@ -946,6 +946,7 @@ class CWLJob(Job):
         required_env_vars = self.populate_env_vars(cwljob)
 
         immobile_cwljob_dict = copy.deepcopy(cwljob)
+        logging.error('CWL job parameters: %s' % json.dumps(immobile_cwljob_dict, indent=4))
         for inp_id in immobile_cwljob_dict.keys():
             found = False
             for field in self.cwltool.inputs_record_schema['fields']:
