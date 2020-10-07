@@ -33,6 +33,7 @@ from boto.exception import (SDBResponseError,
                             S3CreateError,
                             S3CopyError)
 import boto3
+import boto3.s3.transfer
 
 log = logging.getLogger(__name__)
 
@@ -220,35 +221,13 @@ def uploadFromPath(localFilePath, partSize, bucket, fileID, headers):
 
 
 def chunkedFileUpload(readable, bucket, fileID, file_size, headers=None, partSize=50 << 20):
+    s3 = boto3.resource('s3')
+    config = boto3.s3.transfer.TransferConfig(multipart_threshold=partSize,
+                                              multipart_chunksize=partSize)
     for attempt in retry_s3():
         with attempt:
-            upload = bucket.initiate_multipart_upload(
-                key_name=compat_bytes(fileID),
-                headers=headers)
-    try:
-        start = 0
-        part_num = itertools.count()
-        while start < file_size:
-            end = min(start + partSize, file_size)
-            assert readable.tell() == start
-            for attempt in retry_s3():
-                with attempt:
-                    upload.upload_part_from_file(fp=readable,
-                                                 part_num=next(part_num) + 1,
-                                                 size=end - start,
-                                                 headers=headers)
-            start = end
-        assert readable.tell() == file_size == start
-    except:
-        with panic(log=log):
-            for attempt in retry_s3():
-                with attempt:
-                    upload.cancel_upload()
-    else:
-        for attempt in retry_s3():
-            with attempt:
-                version = upload.complete_upload().version_id
-    return version
+            s3.meta.client.upload_fileobj(readable, bucket.name, fileID, Config=config)
+    return s3.Object(bucket.name, fileID).version_id
 
 
 def copyKeyMultipart(srcBucketName, srcKeyName, srcKeyVersion, dstBucketName, dstKeyName, sseAlgorithm=None, sseKey=None,
