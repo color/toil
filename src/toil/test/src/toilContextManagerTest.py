@@ -13,9 +13,10 @@
 # limitations under the License.
 
 import os
-from toil.lib.bioio import getTempFile
+
 from toil.common import Toil, ToilContextManagerException
 from toil.job import Job
+from toil.lib.bioio import getTempFile
 from toil.test import ToilTest, slow
 
 

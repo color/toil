@@ -14,7 +14,7 @@
 
 # 5.14.2018: copied into Toil from https://github.com/BD2KGenomics/bd2k-python-lib
 
-from itertools import zip_longest
+
 
 def flatten( iterables ):
     """ Flatten an iterable, except for string elements. """

@@ -13,10 +13,11 @@
 # limitations under the License.
 
 from toil.common import Config
-from toil.job import JobDescription, CheckpointJobDescription
+from toil.job import CheckpointJobDescription, JobDescription
 from toil.jobStores.fileJobStore import FileJobStore
 from toil.test import ToilTest, travis_test
 from toil.worker import nextChainable
+
 
 class WorkerTests(ToilTest):
     """Test miscellaneous units of the worker."""

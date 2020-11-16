@@ -15,6 +15,7 @@
 from toil.job import Job
 from toil.test import ToilTest, travis_test
 
+
 class HelloWorldTest(ToilTest):
     @travis_test
     def testHelloWorld(self):

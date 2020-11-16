@@ -15,20 +15,19 @@
 import logging
 import os
 import re
-import sys
 import subprocess
+import sys
 import tempfile
 import time
+from queue import Empty, Queue
+from shutil import which
 from threading import Thread
 
-from queue import Empty, Queue
-
-from toil.lib.iterables import concat
-from shutil import which
-
-from toil.batchSystems.abstractBatchSystem import BatchSystemSupport, UpdatedBatchJobInfo
-from toil.lib.bioio import getTempFile
+from toil.batchSystems.abstractBatchSystem import (BatchSystemSupport,
+                                                   UpdatedBatchJobInfo)
 from toil.common import Toil
+from toil.lib.bioio import getTempFile
+from toil.lib.iterables import concat
 
 logger = logging.getLogger(__name__)
 

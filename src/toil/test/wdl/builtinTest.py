@@ -1,33 +1,18 @@
 import json
-import unittest
 import os
-import subprocess
 import shutil
+import subprocess
+import unittest
 import uuid
-from typing import Optional, List
+from typing import List, Optional
 
-from toil.wdl.wdl_functions import sub
-from toil.wdl.wdl_functions import ceil
-from toil.wdl.wdl_functions import floor
-from toil.wdl.wdl_functions import read_lines
-from toil.wdl.wdl_functions import read_tsv
-from toil.wdl.wdl_functions import read_json
-from toil.wdl.wdl_functions import read_map
-from toil.wdl.wdl_functions import read_int
-from toil.wdl.wdl_functions import read_string
-from toil.wdl.wdl_functions import read_float
-from toil.wdl.wdl_functions import read_boolean
-from toil.wdl.wdl_functions import write_lines
-from toil.wdl.wdl_functions import write_tsv
-from toil.wdl.wdl_functions import write_json
-from toil.wdl.wdl_functions import write_map
-from toil.wdl.wdl_functions import transpose
-from toil.wdl.wdl_functions import length
-
-from toil.wdl.wdl_functions import WDLPair
-
-from toil.version import exactPython
 from toil.test import ToilTest
+from toil.version import exactPython
+from toil.wdl.wdl_functions import (WDLPair, ceil, floor, length, read_boolean,
+                                    read_float, read_int, read_json,
+                                    read_lines, read_map, read_string,
+                                    read_tsv, sub, transpose, write_json,
+                                    write_lines, write_map, write_tsv)
 
 
 class WdlStandardLibraryFunctionsTest(ToilTest):
@@ -246,19 +231,18 @@ class WdlStandardLibraryFunctionsTest(ToilTest):
         self.assertEqual(0, length([]))
 
 
-
-class WdlWorkflowsTest(ToilTest):
+class WdlStandardLibraryWorkflowsTest(ToilTest):
     """
-    A set of test cases for toil's conformance with WDL.
+    A set of test cases for toil's conformance with the WDL built-in standard library:
+
+    https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#standard-library
 
     All tests should include a simple wdl and json file for toil to run that checks the output.
     """
 
     @classmethod
     def setUpClass(cls):
-        super(WdlWorkflowsTest, cls).setUpClass()
         cls.program = os.path.abspath("src/toil/wdl/toilwdl.py")
-        cls.test_path = os.path.abspath("src/toil/test/wdl")
 
     def check_function(self,
                        function_name: str,
@@ -275,9 +259,9 @@ class WdlWorkflowsTest(ToilTest):
         workflow fails and that the given `expected_exception` string is
         present in standard error.
         """
-        wdl_files = [os.path.abspath(f'{self.test_path}/{function_name}_{case}.wdl')
+        wdl_files = [os.path.abspath(f'src/toil/test/wdl/standard_library/{function_name}_{case}.wdl')
                      for case in cases]
-        json_file = os.path.abspath(f'{self.test_path}/{json_file_name or function_name}.json')
+        json_file = os.path.abspath(f'src/toil/test/wdl/standard_library/{json_file_name or function_name}.json')
         for wdl_file in wdl_files:
             with self.subTest(f'Testing: {wdl_file} {json_file}'):
                 output_dir = f'/tmp/toil-wdl-test-{uuid.uuid4()}'
@@ -304,46 +288,6 @@ class WdlWorkflowsTest(ToilTest):
                     self.fail("Invalid test. Either `expected_result` or `expected_exception` must be set.")
 
                 shutil.rmtree(output_dir)
-
-
-class WdlLanguageSpecWorkflowsTest(WdlWorkflowsTest):
-    """
-    A set of test cases for toil's conformance with the WDL language specification:
-
-    https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#language-specification
-    """
-
-    @classmethod
-    def setUpClass(cls):
-        super(WdlLanguageSpecWorkflowsTest, cls).setUpClass()
-        cls.test_path = os.path.abspath("src/toil/test/wdl/wdl_specification")
-
-    def test_type_pair(self):
-        # NOTE: these tests depend on read_lines(), write_json(), and select_first().
-
-        expected_result = '[23,"twenty-three","a.bai",{"left":23,"right":"twenty-three"}]'
-        self.check_function('type_pair', cases=['basic'], expected_result=expected_result)
-
-        # tests if files from the pair type are correctly imported.
-        # the array of three arrays consists content from:
-        # 1. src/toil/test/wdl/testfiles/test_string.txt        -> 'A Whale of a Tale.'
-        # 2. src/toil/test/wdl/testfiles/test_boolean.txt       -> 'true'
-        # 3. src/toil/test/wdl/testfiles/test_int.txt           -> '11'
-        expected_result = '[["A Whale of a Tale."],["true"],["11"]]'
-        self.check_function('type_pair', cases=['with_files'], expected_result=expected_result)
-
-
-class WdlStandardLibraryWorkflowsTest(WdlWorkflowsTest):
-    """
-    A set of test cases for toil's conformance with the WDL built-in standard library:
-
-    https://github.com/openwdl/wdl/blob/main/versions/development/SPEC.md#standard-library
-    """
-
-    @classmethod
-    def setUpClass(cls):
-        super(WdlStandardLibraryWorkflowsTest, cls).setUpClass()
-        cls.test_path = os.path.abspath("src/toil/test/wdl/standard_library")
 
     def test_sub(self):
         # this workflow swaps the extension of a TSV file to CSV, with String and File inputs.

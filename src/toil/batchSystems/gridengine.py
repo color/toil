@@ -13,14 +13,15 @@
 # limitations under the License.
 
 import logging
-import os
-from pipes import quote
-from toil.lib.misc import call_command, CalledProcessErrorStderr
-import time
 import math
+import os
+import time
+from pipes import quote
 
 from toil.batchSystems import MemoryString
-from toil.batchSystems.abstractGridEngineBatchSystem import AbstractGridEngineBatchSystem
+from toil.batchSystems.abstractGridEngineBatchSystem import \
+    AbstractGridEngineBatchSystem
+from toil.lib.misc import CalledProcessErrorStderr, call_command
 
 logger = logging.getLogger(__name__)
 

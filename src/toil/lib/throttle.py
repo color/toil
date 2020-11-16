@@ -15,8 +15,8 @@
 # 5.14.2018: copied into Toil from https://github.com/BD2KGenomics/bd2k-python-lib
 
 
-import time
 import threading
+import time
 
 from toil.lib.threading import BoundedEmptySemaphore
 

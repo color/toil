@@ -14,9 +14,11 @@
 
 import os
 from argparse import ArgumentParser
+
 from toil.common import Toil
 from toil.job import Job, JobDescription, TemporaryID
 from toil.test import ToilTest, travis_test
+
 
 class JobDescriptionTest(ToilTest):
     

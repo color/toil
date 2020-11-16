@@ -14,16 +14,14 @@
 
 
 import logging
+import os
+import shutil
+import signal
 
 from toil.common import Toil
 from toil.job import Job
 from toil.leader import FailedJobsException
 from toil.test import ToilTest, slow
-
-import os
-import shutil
-import signal
-
 
 logger = logging.getLogger(__name__)
 

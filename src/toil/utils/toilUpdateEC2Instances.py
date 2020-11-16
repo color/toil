@@ -16,6 +16,7 @@ Updates Toil's internal list of EC2 instance types.
 """
 import logging
 import socket
+
 from toil.lib.ec2nodes import updateStaticEC2Instances
 
 logger = logging.getLogger( __name__ )

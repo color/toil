@@ -16,14 +16,14 @@
 Reports statistical data about a given Toil workflow.
 """
 
-from functools import partial
-import logging
 import json
-from toil.lib.bioio import getBasicOptionParser
-from toil.lib.bioio import parseBasicOptions
-from toil.common import Toil, jobStoreLocatorHelp, Config
-from toil.version import version
+import logging
+from functools import partial
+
+from toil.common import Config, Toil, jobStoreLocatorHelp
+from toil.lib.bioio import getBasicOptionParser, parseBasicOptions
 from toil.lib.expando import Expando
+from toil.version import version
 
 logger = logging.getLogger( __name__ )
 

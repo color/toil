@@ -22,17 +22,15 @@ import logging
 import os
 import pickle
 import shutil
-import sys
 import tempfile
 import time
-
-import dill
-
 import uuid
 from abc import ABCMeta, abstractmethod
 from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 from contextlib import contextmanager
 from io import BytesIO
+
+import dill
 
 from toil.common import Config, Toil, addOptions, safeUnpickleFromStream
 from toil.deferred import DeferredFunction

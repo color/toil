@@ -17,32 +17,33 @@ The leader script (of the leader/worker pair) for running jobs.
 """
 
 import base64
+import glob
 import logging
-import time
 import os
 import pickle
 import sys
-import glob
+import time
 
-from toil.lib.humanize import bytes2human
 from toil import resolveEntryPoint
+from toil.lib.humanize import bytes2human
+
 try:
     from toil.cwl.cwltoil import CWL_INTERNAL_JOBS
 except ImportError:
     # CWL extra not installed
     CWL_INTERNAL_JOBS = ()
-from toil.batchSystems.abstractBatchSystem import BatchJobExitReason
-from toil.jobStores.abstractJobStore import NoSuchJobException
+import enlighten
+
 from toil.batchSystems import DeadlockException
+from toil.batchSystems.abstractBatchSystem import BatchJobExitReason
+from toil.common import Toil, ToilMetrics
+from toil.job import CheckpointJobDescription, ServiceJobDescription
+from toil.jobStores.abstractJobStore import NoSuchJobException
 from toil.lib.throttle import LocalThrottle
 from toil.provisioners.clusterScaler import ScalerThread
 from toil.serviceManager import ServiceManager
 from toil.statsAndLogging import StatsAndLogging
-from toil.job import CheckpointJobDescription, ServiceJobDescription
 from toil.toilState import ToilState
-from toil.common import Toil, ToilMetrics
-
-import enlighten
 
 logger = logging.getLogger( __name__ )
 

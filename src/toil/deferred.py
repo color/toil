@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections import namedtuple
-from contextlib import contextmanager
-
-import dill
 import fcntl
 import logging
 import os
 import shutil
 import tempfile
+from collections import namedtuple
+from contextlib import contextmanager
+
+import dill
 
 from toil.realtimeLogger import RealtimeLogger
 from toil.resource import ModuleDescriptor

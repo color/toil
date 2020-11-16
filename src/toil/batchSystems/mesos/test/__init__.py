@@ -1,14 +1,14 @@
-from abc import ABCMeta, abstractmethod
 import logging
 import shutil
-import threading
 import subprocess
-from urllib.request import urlopen
-from contextlib import closing
+import threading
 import time
+from abc import ABCMeta, abstractmethod
+from contextlib import closing
+from shutil import which
+from urllib.request import urlopen
 
 from toil.lib.retry import retry
-from shutil import which
 from toil.lib.threading import ExceptionalThread, cpu_count
 
 log = logging.getLogger(__name__)

@@ -12,23 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from contextlib import contextmanager
 import logging
-import os
-import time
 import math
+import os
 import subprocess
 import sys
+import time
 import traceback
-from threading import Thread, Event
-from threading import Lock, Condition
+from contextlib import contextmanager
 from queue import Empty, Queue
+from threading import Condition, Event, Lock, Thread
 
 import toil
-from toil.batchSystems.abstractBatchSystem import BatchSystemSupport, EXIT_STATUS_UNAVAILABLE_VALUE, UpdatedBatchJobInfo
-from toil.lib.threading import cpu_count
 from toil import worker as toil_worker
+from toil.batchSystems.abstractBatchSystem import (
+    EXIT_STATUS_UNAVAILABLE_VALUE, BatchSystemSupport, UpdatedBatchJobInfo)
 from toil.common import Toil
+from toil.lib.threading import cpu_count
 
 log = logging.getLogger(__name__)
 

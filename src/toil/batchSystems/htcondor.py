@@ -13,14 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import logging
-import time
 import math
-
-from toil.batchSystems.abstractGridEngineBatchSystem import AbstractGridEngineBatchSystem
+import os
+import time
 
 import htcondor
+
+from toil.batchSystems.abstractGridEngineBatchSystem import \
+    AbstractGridEngineBatchSystem
 
 logger = logging.getLogger(__name__)
 

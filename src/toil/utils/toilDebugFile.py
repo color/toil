@@ -15,13 +15,12 @@
 """Debug tool for copying files contained in a toil jobStore.
 """
 
-import logging
 import fnmatch
+import logging
 import os.path
 
-from toil.lib.bioio import getBasicOptionParser
-from toil.lib.bioio import parseBasicOptions
-from toil.common import Toil, jobStoreLocatorHelp, Config
+from toil.common import Config, Toil, jobStoreLocatorHelp
+from toil.lib.bioio import getBasicOptionParser, parseBasicOptions
 from toil.version import version
 
 logger = logging.getLogger( __name__ )

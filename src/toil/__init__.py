@@ -31,8 +31,6 @@ from toil.lib.memoize import memoize
 from toil.lib.retry import retry
 from toil.version import currentCommit
 
-from urllib.request import urlretrieve
-
 log = logging.getLogger(__name__)
 
 

@@ -17,26 +17,26 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+import json
 import logging
 import math
-from toil.lib.misc import call_command
 import os
-import json
 import re
+from datetime import datetime
 from random import randint
 
 from dateutil.parser import parse
 from dateutil.tz import tzlocal
-from datetime import datetime
 
 from toil.batchSystems import MemoryString
 from toil.batchSystems.abstractBatchSystem import BatchJobExitReason
 from toil.batchSystems.abstractGridEngineBatchSystem import \
-        AbstractGridEngineBatchSystem
-from toil.batchSystems.lsfHelper import (parse_memory_resource,
+    AbstractGridEngineBatchSystem
+from toil.batchSystems.lsfHelper import (check_lsf_json_output_supported,
                                          parse_memory_limit,
-                                         per_core_reservation,
-                                         check_lsf_json_output_supported)
+                                         parse_memory_resource,
+                                         per_core_reservation)
+from toil.lib.misc import call_command
 
 logger = logging.getLogger(__name__)
 

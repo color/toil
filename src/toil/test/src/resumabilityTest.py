@@ -15,9 +15,10 @@
 import os
 
 from toil.job import Job
-from toil.test import ToilTest, slow
 from toil.jobStores.abstractJobStore import NoSuchFileException
 from toil.leader import FailedJobsException
+from toil.test import ToilTest, slow
+
 
 @slow
 class ResumabilityTest(ToilTest):

@@ -1,12 +1,13 @@
 import logging
 import time
-
-from typing import Optional, List, Dict
 from operator import attrgetter
+from typing import Dict, List, Optional
+
+from boto3.resources.base import ServiceResource
+from boto.exception import EC2ResponseError
+
 from toil.lib.exceptions import panic
 from toil.lib.retry import old_retry
-from boto.exception import EC2ResponseError
-from boto3.resources.base import ServiceResource
 
 a_short_time = 5
 a_long_time = 60 * 60

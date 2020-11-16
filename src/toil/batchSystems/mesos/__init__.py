@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from queue import Queue
-from collections import namedtuple
 from bisect import bisect
+from collections import namedtuple
+from queue import Queue
 from threading import Lock
 
 from toil.provisioners.abstractProvisioner import Shape
-
 
 TaskData = namedtuple('TaskData', (
     # Time when the task was started

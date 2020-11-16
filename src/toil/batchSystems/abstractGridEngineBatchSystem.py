@@ -13,18 +13,18 @@
 # limitations under the License.
 
 
-from datetime import datetime
 import logging
 import time
-from threading import Thread, Lock
 from abc import ABCMeta, abstractmethod
-
+from datetime import datetime
 from queue import Empty, Queue
+from threading import Lock, Thread
 
+from toil.batchSystems.abstractBatchSystem import (BatchJobExitReason,
+                                                   BatchSystemCleanupSupport,
+                                                   UpdatedBatchJobInfo)
 from toil.lib.misc import CalledProcessErrorStderr
 from toil.lib.objects import abstractclassmethod
-
-from toil.batchSystems.abstractBatchSystem import BatchSystemCleanupSupport, UpdatedBatchJobInfo, BatchJobExitReason
 
 logger = logging.getLogger(__name__)
 

@@ -29,8 +29,24 @@ import sys
 import tempfile
 import urllib
 import uuid
-from typing import (Any, Dict, Iterator, List, Mapping, MutableMapping,
-                    MutableSequence, Text, TextIO, Tuple, TypeVar, Union, cast)
+import urllib
+import datetime
+from typing import (
+    Text,
+    Mapping,
+    MutableSequence,
+    MutableMapping,
+    List,
+    Dict,
+    Union,
+    Any,
+    Iterator,
+    TextIO,
+    Set,
+    Tuple,
+    cast,
+)
+
 from urllib import parse as urlparse
 
 import cwltool.builder
@@ -42,31 +58,49 @@ import cwltool.main
 import cwltool.provenance
 import cwltool.resolver
 import cwltool.stdfsaccess
-import cwltool.workflow
-import schema_salad.ref_resolver
+import cwltool.command_line_tool
+import cwltool.provenance
+
+from toil.jobStores.abstractJobStore import NoSuchJobStoreException, NoSuchFileException
+from toil.fileStores import FileID
+from toil.fileStores.abstractFileStore import AbstractFileStore
 from cwltool.loghandler import _logger as cwllogger
 from cwltool.loghandler import defaultStreamHandler
-from cwltool.mutation import MutationManager
-from cwltool.pathmapper import MapperEnt, PathMapper, downloadHttpFile
-from cwltool.process import (Process, add_sizes, compute_checksums,
-                             fill_in_defaults, shortname)
+from cwltool.pathmapper import (
+    PathMapper,
+    adjustDirObjs,
+    adjustFileObjs,
+    MapperEnt,
+    visit_class,
+    downloadHttpFile,
+)
+from cwltool.process import (
+    shortname,
+    fill_in_defaults,
+    compute_checksums,
+    add_sizes,
+    Process,
+)
 from cwltool.secrets import SecretStore
 from cwltool.software_requirements import (
-    DependenciesConfiguration, get_container_from_software_requirements)
-from cwltool.utils import (CWLObjectType, adjustDirObjs, adjustFileObjs,
-                           aslist, convert_pathsep_to_unix, get_listing,
-                           normalizeFilesDirs, visit_class)
-from ruamel.yaml.comments import CommentedMap
-from schema_salad import validate
-from schema_salad.schema import Names
-from schema_salad.sourceline import SourceLine
+    DependenciesConfiguration,
+    get_container_from_software_requirements,
+)
+from cwltool.utils import (
+    aslist,
+    convert_pathsep_to_unix,
+    get_listing,
+    normalizeFilesDirs,
+    CWLObjectType,
+)
+from cwltool.mutation import MutationManager
+from cwltool.builder import content_limit_respected_read
 
 from toil.common import Config, Toil, addOptions
 from toil.fileStores import FileID
 from toil.fileStores.abstractFileStore import AbstractFileStore
 from toil.job import Job, Promise
-from toil.jobStores.abstractJobStore import (NoSuchFileException,
-                                             NoSuchJobStoreException)
+from toil.jobStores.abstractJobStore import NoSuchFileException, NoSuchJobStoreException
 from toil.version import baseVersion
 
 logger = logging.getLogger(__name__)

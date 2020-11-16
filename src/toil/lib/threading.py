@@ -28,8 +28,8 @@ from threading import BoundedSemaphore
 
 import psutil
 
-from toil.lib.misc import robust_rmtree
 from toil.lib.exceptions import raise_
+from toil.lib.misc import robust_rmtree
 
 log = logging.getLogger(__name__)
 

@@ -167,8 +167,8 @@ def importVersion():
         pass
     else:
         # Use the template to generate src/toil/version.py
-        import os
         import errno
+        import os
         from tempfile import NamedTemporaryFile
 
         new = version_template.expand_()

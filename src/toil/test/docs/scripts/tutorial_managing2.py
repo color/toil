@@ -1,7 +1,8 @@
+import os
+
 from toil.common import Toil
 from toil.job import Job
-import os
-import sys
+
 
 def globalFileStoreJobFn(job):
     job.log("The following example exercises all the methods provided"

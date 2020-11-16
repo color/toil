@@ -13,12 +13,10 @@
 # limitations under the License.
 
 
-import logging
-from contextlib import closing, contextmanager
-
 import base64
 import hashlib
 import itertools
+import logging
 import pickle
 import re
 import reprlib
@@ -27,6 +25,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
+from contextlib import closing, contextmanager
 from io import BytesIO
 
 import boto3

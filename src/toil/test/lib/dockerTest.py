@@ -12,21 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import logging
+import os
 import signal
 import time
-import os
-import sys
 import uuid
-import docker
 from threading import Thread
-from docker.errors import ContainerError
 
+import docker
+from docker.errors import ContainerError
 from toil.job import Job
 from toil.leader import FailedJobsException
-from toil.test import ToilTest, slow, needs_docker
-from toil.lib.docker import apiDockerCall, containerIsRunning, dockerKill
-from toil.lib.docker import FORGO, STOP, RM
-
+from toil.lib.docker import (FORGO, RM, STOP, apiDockerCall,
+                             containerIsRunning, dockerKill)
+from toil.test import ToilTest, needs_docker, slow
 
 logger = logging.getLogger(__name__)
 

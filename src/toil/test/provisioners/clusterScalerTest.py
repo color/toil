@@ -12,32 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
 import datetime
-from contextlib import contextmanager
-from threading import Thread, Event
 import logging
 import random
+import time
 import types
 import uuid
 from collections import defaultdict
+from contextlib import contextmanager
+from queue import Empty, Queue
+from threading import Event, Thread
+
 from mock import MagicMock
 
-from queue import Empty, Queue
-
+from toil.batchSystems.abstractBatchSystem import (AbstractBatchSystem,
+                                                   AbstractScalableBatchSystem,
+                                                   NodeInfo)
+from toil.common import Config, defaultTargetTime
 from toil.job import JobDescription
 from toil.lib.humanize import human2bytes as h2b
-from toil.test import ToilTest, slow, travis_test
-from toil.batchSystems.abstractBatchSystem import (AbstractScalableBatchSystem,
-                                                   NodeInfo,
-                                                   AbstractBatchSystem)
-from toil.provisioners.node import Node
 from toil.provisioners.abstractProvisioner import AbstractProvisioner, Shape
-from toil.provisioners.clusterScaler import (ClusterScaler,
-                                             ScalerThread,
-                                             BinPackedFit,
-                                             NodeReservation)
-from toil.common import Config, defaultTargetTime
+from toil.provisioners.clusterScaler import (BinPackedFit, ClusterScaler,
+                                             NodeReservation, ScalerThread)
+from toil.provisioners.node import Node
+from toil.test import ToilTest, slow, travis_test
 
 logger = logging.getLogger(__name__)
 

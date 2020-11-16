@@ -34,8 +34,7 @@ from urllib.request import urlopen
 
 import pytz
 
-from toil import (ApplianceImageNotFound, applianceSelf,
-                  toilPackageDirPath)
+from toil import ApplianceImageNotFound, applianceSelf, toilPackageDirPath
 from toil.lib.iterables import concat
 from toil.lib.memoize import memoize
 from toil.lib.threading import ExceptionalThread, cpu_count
@@ -346,6 +345,8 @@ def needs_mesos(test_item):
     try:
         import psutil
         import pymesos
+        print(psutil.__file__)
+        pritn(pymesos.__file__)  # keep these imports from being removed.
     except ImportError:
         return unittest.skip("Install Mesos (and Toil with the 'mesos' extra) to include this test.")(test_item)
     return test_item
@@ -417,6 +418,7 @@ def needs_encryption(test_item):
     try:
         # noinspection PyUnresolvedReferences
         import nacl
+        print(nacl.__file__)  # keep this import from being removed.
     except ImportError:
         return unittest.skip(
             "Install Toil with the 'encryption' extra to include this test.")(test_item)
@@ -433,6 +435,7 @@ def needs_cwl(test_item):
     try:
         # noinspection PyUnresolvedReferences
         import cwltool
+        print(cwltool.__file__)  # keep this import from being removed
     except ImportError:
         return unittest.skip("Install Toil with the 'cwl' extra to include this test.")(test_item)
     else:

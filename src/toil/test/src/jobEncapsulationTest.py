@@ -13,8 +13,8 @@
 # limitations under the License.
 import os
 
-from toil.lib.bioio import getTempFile
 from toil.job import Job
+from toil.lib.bioio import getTempFile
 from toil.test import ToilTest, travis_test
 from toil.test.src.jobTest import fn1Test
 

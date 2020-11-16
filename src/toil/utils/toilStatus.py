@@ -21,11 +21,11 @@ import os
 import sys
 from functools import reduce
 
+# toil imports
 from toil.common import Config, Toil, jobStoreLocatorHelp
 from toil.job import JobException, ServiceJobDescription
 from toil.jobStores.abstractJobStore import (NoSuchFileException,
                                              NoSuchJobStoreException)
-# toil imports
 from toil.lib.bioio import getBasicOptionParser, parseBasicOptions
 from toil.statsAndLogging import StatsAndLogging
 from toil.version import version

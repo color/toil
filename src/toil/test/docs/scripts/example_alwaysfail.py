@@ -4,6 +4,7 @@ import sys
 from toil.common import Toil
 from toil.job import Job
 
+
 def main():
     """
     This workflow always fails.

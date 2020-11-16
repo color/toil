@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import codecs
-import random
-import os
 import errno
+import os
+import random
 
 from toil.common import Toil
-from toil.job import Job
 from toil.fileStores import FileID
+from toil.job import Job
 from toil.test import ToilTest, slow, travis_test
 
 PREFIX_LENGTH=200

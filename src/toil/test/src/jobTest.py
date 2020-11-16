@@ -12,17 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import collections
-import unittest
 import logging
 import os
 import random
+import unittest
+
+import pytest
 
 from toil.common import Toil
+from toil.job import Job, JobFunctionWrappingJob, JobGraphDeadlockException
 from toil.leader import FailedJobsException
 from toil.lib.bioio import getTempFile
-from toil.job import Job, JobGraphDeadlockException, JobFunctionWrappingJob
 from toil.test import ToilTest, slow, travis_test
-import pytest
 
 logger = logging.getLogger(__name__)
 

@@ -11,13 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from itertools import count
+import datetime
 import logging
 import pipes
 import socket
-import datetime
-import time
 import subprocess
+import time
+from itertools import count
+
 from toil.lib.memoize import parse_iso_utc
 
 a_short_time = 5

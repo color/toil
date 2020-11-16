@@ -15,6 +15,7 @@
 
 from functools import total_ordering
 
+
 class DeadlockException(Exception):
     """
     Exception thrown by the Leader or BatchSystem when a deadlock is encountered due to insufficient

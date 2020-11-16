@@ -11,32 +11,32 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
-import time
-import string
 import json
-import boto3
 import logging
+import os
+import string
+import time
 import urllib.request
-import boto.ec2
-
 from functools import wraps
+
+import boto3
+import boto.ec2
 from boto.ec2.blockdevicemapping import BlockDeviceMapping, BlockDeviceType
 from boto.exception import BotoServerError, EC2ResponseError
 from boto.utils import get_instance_metadata
 
-from toil.lib.memoize import memoize
-from toil.lib.ec2 import (a_short_time, create_ondemand_instances, create_instances,
-                          create_spot_instances, wait_instances_running, wait_transition)
-from toil.lib.misc import truncExpBackoff
-from toil.provisioners.abstractProvisioner import AbstractProvisioner, Shape
-from toil.provisioners.aws import zoneToRegion, getCurrentAWSZone, getSpotZone
 from toil.lib.context import Context
-from toil.lib.retry import old_retry
-from toil.lib.memoize import less_strict_bool
-from toil.provisioners import NoSuchClusterException
-from toil.provisioners.node import Node
+from toil.lib.ec2 import (a_short_time, create_instances,
+                          create_ondemand_instances, create_spot_instances,
+                          wait_instances_running, wait_transition)
 from toil.lib.generatedEC2Lists import E2Instances
+from toil.lib.memoize import less_strict_bool, memoize
+from toil.lib.misc import truncExpBackoff
+from toil.lib.retry import old_retry
+from toil.provisioners import NoSuchClusterException
+from toil.provisioners.abstractProvisioner import AbstractProvisioner, Shape
+from toil.provisioners.aws import getCurrentAWSZone, getSpotZone, zoneToRegion
+from toil.provisioners.node import Node
 
 logger = logging.getLogger(__name__)
 logging.getLogger("boto").setLevel(logging.CRITICAL)

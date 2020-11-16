@@ -12,46 +12,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import socketserver
-import pytest
 import hashlib
-import logging
-import threading
-import os
-import sys
-import shutil
-import tempfile
-import time
-import uuid
-from stubserver import FTPStubServer
-from abc import abstractmethod, ABCMeta
-from itertools import chain, islice
-from threading import Thread
-from queue import Queue
 import http
-from io import StringIO
+import logging
+import os
+import shutil
+import socketserver
+import tempfile
+import threading
+import time
 import urllib.parse as urlparse
-from urllib.request import urlopen, Request
+import uuid
+from abc import ABCMeta, abstractmethod
+from io import StringIO
+from itertools import chain, islice
+from queue import Queue
+from threading import Thread
+from urllib.request import Request, urlopen
 
-from toil.lib.memoize import memoize
-from toil.lib.exceptions import panic
-# noinspection PyPackageRequirements
-# (installed by `make prepare`)
+import pytest
+from stubserver import FTPStubServer
 
 from toil.common import Config, Toil
 from toil.fileStores import FileID
 from toil.job import Job, JobDescription, TemporaryID
-from toil.jobStores.abstractJobStore import (NoSuchJobException,
-                                             NoSuchFileException)
+from toil.jobStores.abstractJobStore import (NoSuchFileException,
+                                             NoSuchJobException)
 from toil.jobStores.fileJobStore import FileJobStore
+from toil.lib.exceptions import panic
+from toil.lib.memoize import memoize
 from toil.statsAndLogging import StatsAndLogging
-from toil.test import (ToilTest,
-                       needs_aws_s3,
-                       needs_encryption,
-                       make_tests,
-                       needs_google,
-                       travis_test,
-                       slow)
+from toil.test import (ToilTest, make_tests, needs_aws_s3, needs_encryption,
+                       needs_google, slow, travis_test)
+
+# noinspection PyPackageRequirements
+# (installed by `make prepare`)
+
 
 # Need googleRetry decorator even if google is not available, so make one up.
 # Unconventional use of decorator to determine if google is enabled by seeing if
@@ -1191,9 +1187,10 @@ class AWSJobStoreTest(AbstractJobStoreTest.Test):
         failed to be created.  We simulate a failed jobstore bucket creation by using a bucket in a
         different region with the same name.
         """
-        from boto.sdb import connect_to_region
-        from boto.s3.connection import Location, S3Connection
         from boto.exception import S3ResponseError
+        from boto.s3.connection import Location, S3Connection
+        from boto.sdb import connect_to_region
+
         from toil.jobStores.aws.jobStore import BucketLocationConflictException
         from toil.jobStores.aws.utils import retry_s3
         externalAWSLocation = Location.USWest
@@ -1298,6 +1295,7 @@ class AWSJobStoreTest(AbstractJobStoreTest.Test):
 
     def _createExternalStore(self):
         import boto.s3
+
         from toil.jobStores.aws.utils import region_to_bucket_location
         s3 = boto.s3.connect_to_region(self.awsRegion())
         try:
@@ -1317,6 +1315,7 @@ class AWSJobStoreTest(AbstractJobStoreTest.Test):
 
     def _largeLogEntrySize(self):
         from toil.jobStores.aws.jobStore import AWSJobStore
+
         # So we get into the else branch of reader() in uploadStream(multiPart=False):
         return AWSJobStore.FileInfo.maxBinarySize() * 2
 

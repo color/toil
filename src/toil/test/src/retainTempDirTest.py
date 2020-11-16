@@ -13,9 +13,11 @@
 # limitations under the License.
 import os
 import shutil
+
 from toil.job import Job
 from toil.leader import FailedJobsException
 from toil.test import ToilTest, travis_test
+
 
 class CleanWorkDirTest(ToilTest):
     """

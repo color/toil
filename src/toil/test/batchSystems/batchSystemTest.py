@@ -12,45 +12,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import fcntl
+import itertools
+import logging
+import os
+import subprocess
+import sys
+import tempfile
+import time
 from abc import ABCMeta, abstractmethod
 from fractions import Fraction
 from inspect import getsource
-import logging
-import os
-import fcntl
-import itertools
-import tempfile
 from textwrap import dedent
-import time
-import sys
-import subprocess
 from unittest import skipIf
 
-from toil.common import Config
+from toil.batchSystems.abstractBatchSystem import (BatchSystemSupport,
+                                                   InsufficientSystemResources)
 # Don't import any batch systems here that depend on extras
 # in order to import properly. Import them later, in tests 
 # protected by annotations.
 from toil.batchSystems.mesos.test import MesosTestSupport
-from toil.batchSystems.parasolTestSupport import ParasolTestSupport
 from toil.batchSystems.parasol import ParasolBatchSystem
+from toil.batchSystems.parasolTestSupport import ParasolTestSupport
 from toil.batchSystems.singleMachine import SingleMachineBatchSystem
-from toil.batchSystems.abstractBatchSystem import (InsufficientSystemResources,
-                                                   BatchSystemSupport)
+from toil.common import Config
 from toil.job import Job, JobDescription
 from toil.lib.threading import cpu_count
-from toil.test import (ToilTest,
-                       needs_aws_s3,
-                       needs_lsf,
-                       needs_kubernetes,
-                       needs_fetchable_appliance,
-                       needs_mesos,
-                       needs_parasol,
-                       needs_gridengine,
-                       needs_slurm,
-                       needs_torque,
-                       needs_htcondor,
-                       slow,
-                       travis_test)
+from toil.test import (ToilTest, needs_aws_s3, needs_fetchable_appliance,
+                       needs_gridengine, needs_htcondor, needs_kubernetes,
+                       needs_lsf, needs_mesos, needs_parasol, needs_slurm,
+                       needs_torque, slow, travis_test)
 
 log = logging.getLogger(__name__)
 
@@ -463,7 +454,10 @@ class MaxCoresSingleMachineBatchSystemTest(ToilTest):
         self.counterPath = writeTempFile('0,0')
 
         def script():
-            import os, sys, fcntl, time
+            import fcntl
+            import os
+            import sys
+            import time
             def count(delta):
                 """
                 Adjust the first integer value in a file by the given amount. If the result

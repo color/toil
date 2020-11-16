@@ -11,8 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 import logging
+import os
 
 import toil.wdl.wdl_parser as wdl_parser
 from toil.wdl.wdl_functions import heredoc_wdl

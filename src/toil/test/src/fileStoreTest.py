@@ -13,30 +13,30 @@
 # limitations under the License.
 
 
-import filecmp
-from abc import ABCMeta
-from struct import pack, unpack
-from uuid import uuid4
-
-from toil.job import Job
-from toil.fileStores import FileID
-from toil.fileStores.cachingFileStore import CacheUnbalancedError, IllegalDeletionCacheError
-from toil.test import ToilTest, needs_aws_ec2, needs_google, slow, travis_test
-from toil.leader import FailedJobsException
-from toil.jobStores.abstractJobStore import NoSuchFileException
-from toil.realtimeLogger import RealtimeLogger
-
 import collections
 import datetime
 import errno
+import filecmp
 import inspect
 import logging
 import os
 import random
 import signal
-import sys
 import time
+from abc import ABCMeta
+from struct import pack, unpack
+from uuid import uuid4
+
 import pytest
+
+from toil.fileStores import FileID
+from toil.fileStores.cachingFileStore import (CacheUnbalancedError,
+                                              IllegalDeletionCacheError)
+from toil.job import Job
+from toil.jobStores.abstractJobStore import NoSuchFileException
+from toil.leader import FailedJobsException
+from toil.realtimeLogger import RealtimeLogger
+from toil.test import ToilTest, needs_aws_ec2, needs_google, slow, travis_test
 
 # Some tests take too long on the AWS jobstore and are unquitable for CI.  They can be
 # be run during manual tests by setting this to False.

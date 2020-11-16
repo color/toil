@@ -16,6 +16,7 @@ from argparse import ArgumentParser
 
 from toil.job import Job
 
+
 def touchFile( fileStore ):
     with fileStore.writeGlobalFileStream() as (f, id):
         f.write( "This is a triumph" )

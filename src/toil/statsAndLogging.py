@@ -18,10 +18,10 @@ import json
 import logging
 import os
 import time
-from threading import Thread, Event
+from threading import Event, Thread
 
-from toil.lib.expando import Expando
 from toil.lib.bioio import getTotalCpuTime
+from toil.lib.expando import Expando
 
 logger = logging.getLogger( __name__ )
 

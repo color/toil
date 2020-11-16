@@ -22,12 +22,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from packaging import version
+import fnmatch
 import math
 import os
-import subprocess
-import fnmatch
 import re
+import subprocess
+
+from packaging import version
 
 LSB_PARAMS_FILENAME = "lsb.params"
 LSF_CONF_FILENAME = "lsf.conf"

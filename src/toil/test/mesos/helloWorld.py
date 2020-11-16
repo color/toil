@@ -16,6 +16,7 @@ A simple user script for Toil
 """
 
 import argparse
+
 from toil.common import Toil
 from toil.job import Job
 

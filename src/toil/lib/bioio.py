@@ -13,16 +13,14 @@
 # limitations under the License.
 
 
-import os
 import logging
-import resource
 import logging.handlers
-import tempfile
+import os
 import random
-from argparse import ArgumentParser
+import resource
 import subprocess
-
-
+import tempfile
+from argparse import ArgumentParser
 from xml.dom import minidom  # For making stuff pretty
 
 defaultLogLevel = logging.INFO

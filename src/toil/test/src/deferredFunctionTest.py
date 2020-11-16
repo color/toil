@@ -13,18 +13,17 @@
 # limitations under the License.
 
 
-from abc import ABCMeta
-from uuid import uuid4
-
-from toil.job import Job
-from toil.fileStores.cachingFileStore import CachingFileStore
-from toil.test import ToilTest, slow, travis_test
-from toil.leader import FailedJobsException
-from toil.lib.threading import cpu_count 
-
 import os
 import signal
 import time
+from abc import ABCMeta
+from uuid import uuid4
+
+from toil.fileStores.cachingFileStore import CachingFileStore
+from toil.job import Job
+from toil.leader import FailedJobsException
+from toil.lib.threading import cpu_count
+from toil.test import ToilTest, slow, travis_test
 
 # Some tests take too long on the AWS jobstore and are unquitable for CI.  They can be
 # be run during manual tests by setting this to False.

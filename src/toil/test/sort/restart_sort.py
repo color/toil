@@ -16,11 +16,11 @@
 A demonstration of toil. Sorts the lines of a file into ascending order by doing a parallel merge sort.
 This is an intentionally buggy version that doesn't include restart() for testing purposes.
 """
-from argparse import ArgumentParser
 import codecs
 import os
 import random
 import shutil
+from argparse import ArgumentParser
 
 from toil.common import Toil
 from toil.job import Job

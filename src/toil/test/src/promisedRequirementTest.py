@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import logging
+import os
 import time
-import toil.test.batchSystems.batchSystemTest as batchSystemTest
 
-from toil.job import Job
-from toil.job import PromisedRequirement
-from toil.test import needs_mesos, slow, travis_test
+import toil.test.batchSystems.batchSystemTest as batchSystemTest
 from toil.batchSystems.mesos.test import MesosTestSupport
+from toil.job import Job, PromisedRequirement
+from toil.test import needs_mesos, slow, travis_test
 
 log = logging.getLogger(__name__)
 

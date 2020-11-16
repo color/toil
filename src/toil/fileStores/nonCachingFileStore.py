@@ -13,23 +13,24 @@
 # limitations under the License.
 
 
-from collections import defaultdict
-from contextlib import contextmanager
-import dill
 import errno
 import fcntl
 import logging
 import os
 import sys
 import uuid
+from collections import defaultdict
+from contextlib import contextmanager
 
+import dill
+
+from toil.common import getDirSizeRecursively, getFileSystemSize
+from toil.fileStores import FileID
+from toil.fileStores.abstractFileStore import AbstractFileStore
+from toil.lib.bioio import makePublicDir
+from toil.lib.humanize import bytes2human
 from toil.lib.misc import robust_rmtree
 from toil.lib.threading import get_process_name, process_name_exists
-from toil.lib.humanize import bytes2human
-from toil.common import getDirSizeRecursively, getFileSystemSize
-from toil.lib.bioio import makePublicDir
-from toil.fileStores.abstractFileStore import AbstractFileStore
-from toil.fileStores import FileID
 
 logger = logging.getLogger(__name__)
 

@@ -13,10 +13,10 @@
 # limitations under the License.
 import logging
 import mimetypes
-import sys
 import os
-
 import subprocess
+import sys
+
 from toil.test import ToilTest, slow, travis_test
 from toil.test.mesos import helloWorld
 

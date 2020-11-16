@@ -18,16 +18,16 @@ import logging
 import os
 import time
 from collections import defaultdict
+from itertools import islice
 
+from toil.batchSystems.abstractBatchSystem import (AbstractScalableBatchSystem,
+                                                   NodeInfo)
+from toil.common import defaultTargetTime
+from toil.job import ServiceJobDescription
 from toil.lib.retry import old_retry
 from toil.lib.threading import ExceptionalThread
 from toil.lib.throttle import throttle
-from itertools import islice
-
-from toil.batchSystems.abstractBatchSystem import AbstractScalableBatchSystem, NodeInfo
 from toil.provisioners.abstractProvisioner import Shape
-from toil.job import ServiceJobDescription
-from toil.common import defaultTargetTime
 
 logger = logging.getLogger(__name__)
 

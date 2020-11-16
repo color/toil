@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from toil.test import ToilTest, needs_appliance
-from toil import checkDockerImageExists, parseDockerAppliance
 from docker.errors import ImageNotFound
+from toil import checkDockerImageExists, parseDockerAppliance
+from toil.test import ToilTest, needs_appliance
+
 
 # requires internet
 @needs_appliance

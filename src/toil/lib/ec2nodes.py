@@ -11,12 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import requests
-import os
-import json
 import datetime
+import json
 import logging
+import os
 import textwrap
+
+import requests
 
 logger = logging.getLogger(__name__)
 dirname = os.path.dirname(__file__)

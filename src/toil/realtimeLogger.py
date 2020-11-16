@@ -16,13 +16,13 @@
 Implements a real-time UDP-based logging system that user scripts can use for debugging.
 """
 
-import os
-import os.path
 import json
 import logging
 import logging.handlers
-import threading
+import os
+import os.path
 import socketserver as SocketServer
+import threading
 
 import toil.lib.bioio
 from toil.batchSystems.options import getPublicIP

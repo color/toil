@@ -1,8 +1,8 @@
 # coding=utf-8
 import json
+import logging
 import os
 import re
-import logging
 
 try:
     from urllib.parse import unquote
@@ -14,8 +14,8 @@ from boto.exception import BotoServerError
 from boto.s3.connection import S3Connection
 from boto.utils import get_instance_metadata
 
-from toil.lib.memoize import memoize
 from toil.lib.ec2 import UserError
+from toil.lib.memoize import memoize
 
 log = logging.getLogger(__name__)
 

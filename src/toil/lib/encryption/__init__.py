@@ -13,6 +13,6 @@
 # limitations under the License.
 
 try:
-    from ._nacl import *
+    from ._nacl import *  # noqa
 except ImportError:
-    from ._dummy import *
+    from ._dummy import *  # noqa

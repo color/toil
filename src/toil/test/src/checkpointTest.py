@@ -13,9 +13,10 @@
 # limitations under the License.
 
 from toil.job import Job
-from toil.test import ToilTest, slow, travis_test
-from toil.leader import FailedJobsException
 from toil.jobStores.abstractJobStore import NoSuchFileException
+from toil.leader import FailedJobsException
+from toil.test import ToilTest, slow, travis_test
+
 
 class CheckpointTest(ToilTest):
     
