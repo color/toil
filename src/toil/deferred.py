@@ -17,7 +17,6 @@ from future import standard_library
 standard_library.install_aliases()
 from builtins import map
 from builtins import str
-from builtins import range
 from builtins import object
 from collections import namedtuple
 from contextlib import contextmanager
@@ -253,7 +252,6 @@ class DeferredFunctionManager(object):
         except EOFError as e:
             # This is expected and means we read all the complete entries.
             logger.debug("Out of deferred functions!")
-            pass
 
     def _runOwnDeferredFunctions(self):
         """

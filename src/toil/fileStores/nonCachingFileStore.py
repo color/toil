@@ -175,7 +175,6 @@ class NonCachingFileStore(AbstractFileStore):
         Cleanup function that is run when destroying the class instance.  Nothing to do since there
         are no async write events.
         """
-        pass
 
     @classmethod
     def _removeDeadJobs(cls, nodeInfo, batchSystemShutdown=False):

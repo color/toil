@@ -19,7 +19,6 @@ import os
 import re
 import shutil
 import sqlite3
-import sys
 import tempfile
 import threading
 import time
@@ -698,7 +697,6 @@ class CachingFileStore(AbstractFileStore):
                 # Probably already deleted
                 logger.debug('File already gone: %s', filePath)
                 # Still need to mark it as deleted
-                pass
 
             # Whether we deleted the file or just found out that it is gone, we
             # need to take credit for deleting it so that we remove it from the

@@ -34,7 +34,6 @@ import socket
 import logging
 import shutil
 
-from toil.lib.compatibility import USING_PYTHON2
 from toil.lib.expando import MagicExpando
 from toil.common import Toil, safeUnpickleFromStream
 from toil.fileStores.abstractFileStore import AbstractFileStore

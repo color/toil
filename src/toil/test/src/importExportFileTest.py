@@ -23,7 +23,6 @@ from toil.job import Job
 from toil.leader import FailedJobsException
 from toil.test import ToilTest, slow, travis_test
 from toil.fileStores import FileID
-from toil.common import getDirSizeRecursively
 
 
 class ImportExportFileTest(ToilTest):

@@ -234,7 +234,6 @@ class AbstractBatchSystem(with_metaclass(ABCMeta, object)):
         :param setOption: A function with signature setOption(varName, parsingFn=None, checkFn=None, default=None)
            used to update run configuration
         """
-        pass
         
     def getWorkerContexts(self):
         """

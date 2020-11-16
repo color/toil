@@ -2,13 +2,10 @@ import logging
 import time
 
 from typing import Optional, List, Dict
-from collections import Iterator
 from operator import attrgetter
 from past.builtins import map
 from toil.lib.exceptions import panic
 from toil.lib.retry import old_retry
-from boto.ec2.instance import Instance
-from boto.ec2.spotinstancerequest import SpotInstanceRequest
 from boto.exception import EC2ResponseError
 from boto3.resources.base import ServiceResource
 

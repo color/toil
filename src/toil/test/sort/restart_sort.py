@@ -24,7 +24,6 @@ from argparse import ArgumentParser
 import codecs
 import os
 import random
-import logging
 import shutil
 
 from toil.common import Toil

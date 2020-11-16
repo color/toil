@@ -26,7 +26,6 @@ import collections
 
 from toil.common import Toil
 from toil.job import Job
-from toil.leader import FailedJobsException
 from toil.realtimeLogger import RealtimeLogger
 
 def main():

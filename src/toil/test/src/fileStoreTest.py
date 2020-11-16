@@ -19,13 +19,13 @@ from builtins import str
 from builtins import range
 from builtins import object
 import filecmp
-from abc import abstractmethod, ABCMeta
+from abc import ABCMeta
 from struct import pack, unpack
 from uuid import uuid4
 
 from toil.job import Job
 from toil.fileStores import FileID
-from toil.fileStores.cachingFileStore import IllegalDeletionCacheError, CacheUnbalancedError, CachingFileStore
+from toil.fileStores.cachingFileStore import CacheUnbalancedError, IllegalDeletionCacheError
 from toil.test import ToilTest, needs_aws_ec2, needs_google, slow, travis_test
 from toil.leader import FailedJobsException
 from toil.jobStores.abstractJobStore import NoSuchFileException
@@ -42,10 +42,8 @@ import signal
 import sys
 import time
 import pytest
-import subprocess
 
 # Python 3 compatibility imports
-from six.moves import xrange
 from future.utils import with_metaclass
 
 if sys.version_info[0] < 3:

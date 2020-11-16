@@ -16,24 +16,18 @@ from __future__ import absolute_import
 
 from builtins import range
 from builtins import object
-import sys
 import os
 import logging
 import resource
 import logging.handlers
 import tempfile
 import random
-import math
-import shutil
 from argparse import ArgumentParser
-from optparse import OptionContainer, OptionGroup
 import subprocess
 
 # Python 3 compatibility imports
-from six.moves import xrange
 from six import string_types
 
-import xml.etree.cElementTree as ET
 from xml.dom import minidom  # For making stuff pretty
 
 defaultLogLevel = logging.INFO

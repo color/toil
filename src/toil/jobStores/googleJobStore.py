@@ -32,7 +32,6 @@ from toil.jobStores.abstractJobStore import (AbstractJobStore, NoSuchJobExceptio
                                              NoSuchFileException, NoSuchJobStoreException,
                                              JobStoreExistsException)
 from toil.jobStores.utils import WritablePipe, ReadablePipe
-from toil.job import JobDescription
 log = logging.getLogger(__name__)
 
 GOOGLE_STORAGE = 'gs'

@@ -21,7 +21,6 @@ from toil.job import Job
 from toil.leader import FailedJobsException
 from toil.test import ToilTest, slow
 
-import inspect
 import os
 import shutil
 import signal

@@ -21,13 +21,10 @@ import os
 from pipes import quote
 import time
 import math
-import sys
 import shlex
-import xml.etree.ElementTree as ET
 import tempfile
 from toil.lib.misc import call_command, CalledProcessErrorStderr
 
-from toil.batchSystems import MemoryString
 from toil.batchSystems.abstractGridEngineBatchSystem import AbstractGridEngineBatchSystem, UpdatedBatchJobInfo
 
 logger = logging.getLogger(__name__)
@@ -110,7 +107,6 @@ class TorqueBatchSystem(AbstractGridEngineBatchSystem):
                 self.currentjobs -= {self.jobIDs[item.jobID]}
             except Empty:
                 logger.debug("getUpdatedBatchJob: Job queue is empty")
-                pass
             else:
                 return UpdatedBatchJobInfo(jobID=jobID, exitStatus=retcode, wallTime=None, exitReason=None)
 

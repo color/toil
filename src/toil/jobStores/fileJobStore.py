@@ -42,7 +42,7 @@ from toil.jobStores.abstractJobStore import (AbstractJobStore,
                                              NoSuchFileException,
                                              JobStoreExistsException,
                                              NoSuchJobStoreException)
-from toil.job import JobDescription, TemporaryID
+from toil.job import TemporaryID
 
 logger = logging.getLogger( __name__ )
 

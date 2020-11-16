@@ -178,7 +178,6 @@ class SDBHelper(object):
         return binary, numChunks
 
 
-from boto.sdb.connection import SDBConnection
 
 
 def fileSizeAndTime(localFilePath):

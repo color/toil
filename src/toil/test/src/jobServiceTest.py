@@ -17,13 +17,10 @@ from builtins import map
 from builtins import range
 import codecs
 import os
-import pytest
 import random
 import traceback
-import unittest
 
 # Python 3 compatibility imports
-from six.moves import xrange
 
 from toil.lib.bioio import getTempFile
 from toil.job import Job

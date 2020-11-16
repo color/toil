@@ -18,7 +18,6 @@
 # python 2/3 compatibility imports
 from __future__ import absolute_import
 from __future__ import print_function
-from six.moves import xrange
 from past.builtins import map
 from functools import reduce
 

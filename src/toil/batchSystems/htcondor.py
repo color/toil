@@ -16,7 +16,6 @@
 from __future__ import absolute_import
 from builtins import str
 
-import sys
 import os
 import logging
 import time
@@ -25,7 +24,6 @@ import math
 from toil.batchSystems.abstractGridEngineBatchSystem import AbstractGridEngineBatchSystem
 
 import htcondor
-import classad
 
 logger = logging.getLogger(__name__)
 

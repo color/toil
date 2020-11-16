@@ -17,7 +17,6 @@ from builtins import range
 import os
 
 # Python 3 compatibility imports
-from six.moves import xrange
 
 from toil.job import Job
 from toil.test import ToilTest, slow

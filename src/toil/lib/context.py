@@ -2,10 +2,8 @@
 from six import iteritems
 import json
 import os
-import urllib
 import re
 import logging
-import inspect
 
 try:
     from urllib.parse import unquote
@@ -15,10 +13,6 @@ except ImportError:
 from boto import iam, sns, sqs, vpc
 from boto.exception import BotoServerError
 from boto.s3.connection import S3Connection
-from boto.sqs.connection import SQSConnection
-from boto.sns.connection import SNSConnection
-from boto.vpc import VPCConnection
-from boto.iam.connection import IAMConnection
 from boto.utils import get_instance_metadata
 
 from toil.lib.memoize import memoize

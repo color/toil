@@ -42,11 +42,8 @@
 # See the Hermes repository: http://github.com/scottfrazer/hermes
 #
 ################################################################################
-import sys
-import os
 import re
 import base64
-import argparse
 from builtins import chr
 from collections import OrderedDict
 # Common Code #

@@ -725,7 +725,6 @@ class ClusterScaler(object):
                 continue
             else:
                 logger.debug("Did not find %s in %spreemptable static nodes", node.privateIP, prefix)
-                pass
             nodesToTerminate.append((node, nodeInfo))
         # Sort nodes by number of workers and time left in billing cycle
         nodesToTerminate.sort(key=lambda node_nodeInfo: (

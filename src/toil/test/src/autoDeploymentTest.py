@@ -2,7 +2,6 @@
 from builtins import str
 from builtins import object
 import logging
-import sys
 from contextlib import contextmanager
 
 from toil.lib.iterables import concat

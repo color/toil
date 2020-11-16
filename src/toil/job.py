@@ -21,7 +21,6 @@ from builtins import map
 from builtins import str
 import collections
 import copy
-import enum
 import importlib
 import inspect
 import itertools
@@ -724,7 +723,6 @@ class JobDescription(Requirer):
         
         :param toil.jobStores.abstractJobStore.AbstractJobStore jobStore: The job store we are being placed into
         """
-        pass
     
     def setupJobAfterFailure(self, exitReason=None):
         """
@@ -1141,7 +1139,6 @@ class Job:
         :return: The return value of the function can be passed to other jobs by means of
                  :func:`toil.job.Job.rv`.
         """
-        pass
         
     def _jobGraphsJoined(self, other):
         """
@@ -1791,7 +1788,6 @@ class Job:
             :returns: An object describing how to access the service. The object must be pickleable
                       and will be used by jobs to access the service (see :func:`toil.job.Job.addService`).
             """
-            pass
 
         @abstractmethod
         def stop(self, job):
@@ -1802,7 +1798,6 @@ class Job:
                                      Can be used to register deferred functions, or to access 
                                      the fileStore for creating temporary files.
             """
-            pass
 
         def check(self):
             """
@@ -1813,7 +1808,6 @@ class Job:
                 and considered a success. Important point: if the service job exits due to a failure, it should raise a
                 RuntimeError, not return False!
             """
-            pass
 
     ####################################################
     #Private functions

@@ -57,7 +57,6 @@ from toil.test import (ToilTest,
                        needs_torque,
                        needs_htcondor,
                        slow,
-                       tempFileContaining,
                        travis_test)
 from future.utils import with_metaclass
 

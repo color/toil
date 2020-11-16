@@ -85,7 +85,6 @@ class ChecksumError(Exception):
     """
     Raised when a download from AWS does not contain the correct data.
     """
-    pass
 
 class AWSJobStore(AbstractJobStore):
     """

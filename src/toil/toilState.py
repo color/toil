@@ -14,7 +14,6 @@
 
 from toil.job import JobDescription, CheckpointJobDescription
 
-import itertools
 import logging
 
 logger = logging.getLogger(__name__)

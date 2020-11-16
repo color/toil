@@ -64,7 +64,7 @@ from schema_salad.sourceline import SourceLine
 from toil.common import Config, Toil, addOptions
 from toil.fileStores import FileID
 from toil.fileStores.abstractFileStore import AbstractFileStore
-from toil.job import Job
+from toil.job import Job, Promise
 from toil.jobStores.abstractJobStore import (NoSuchFileException,
                                              NoSuchJobStoreException)
 from toil.version import baseVersion
@@ -102,8 +102,6 @@ def cwltoil_was_removed():
 class UnresolvedDict(dict):
     """Tag to indicate a dict contains promises that must be resolved."""
 
-    pass
-
 
 class SkipNull:
     """
@@ -113,8 +111,6 @@ class SkipNull:
     The CWL 1.2 specification calls for treating this the exactly the same as a
     null value.
     """
-
-    pass
 
 
 def filter_skip_null(name: str, value: Any) -> Any:

@@ -226,6 +226,16 @@ check_cpickle:
 	# https://github.com/BD2KGenomics/toil/issues/1503
 	! find src -iname '*.py' | xargs grep 'cPickle.dump' | grep --invert-match HIGHEST_PROTOCOL
 
+PYSOURCES=$(shell find src -name '*.py') setup.py version_template.py
+
+# Linting and code style related targets
+## sorting imports using isort: https://github.com/timothycrosley/isort
+sort_imports: $(PYSOURCES)
+	isort $^
+
+remove_unused_imports: $(PYSOURCES)
+	autoflake --in-place --remove-all-unused-imports $^
+
 format: $(wildcard src/toil/cwl/*.py)
 	black $^
 

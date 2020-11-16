@@ -546,7 +546,6 @@ class LastProcessStandingArena:
                 except:
                     log.warning('Could not clean up arena %s completely: %s',
                                 self.lockfileDir, traceback.format_exc())
-                    pass
             
             # Now we're done, whether we were the last one or not, and can
             # release the mutex.
