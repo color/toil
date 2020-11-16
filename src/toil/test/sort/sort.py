@@ -14,10 +14,6 @@
 
 """A demonstration of toil. Sorts the lines of a file into ascending order by doing a parallel merge sort.
 """
-from __future__ import absolute_import
-from __future__ import division
-from builtins import range
-from past.utils import old_div
 from argparse import ArgumentParser
 import codecs
 import os
@@ -167,7 +163,7 @@ def getMidPoint(file, fileStart, fileEnd):
     Returns an int i such that fileStart <= i < fileEnd
     """
     with open(file, 'r') as f:
-        midPoint = old_div((fileStart + fileEnd), 2)
+        midPoint = (fileStart + fileEnd) // 2
         assert midPoint >= fileStart
         f.seek(midPoint)
         line = f.readline()

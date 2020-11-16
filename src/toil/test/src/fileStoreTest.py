@@ -12,12 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
-from __future__ import print_function
 
-from builtins import str
-from builtins import range
-from builtins import object
 import filecmp
 from abc import ABCMeta
 from struct import pack, unpack
@@ -43,14 +38,6 @@ import sys
 import time
 import pytest
 
-# Python 3 compatibility imports
-from future.utils import with_metaclass
-
-if sys.version_info[0] < 3:
-    # Define a usable FileNotFoundError as will be raised by os.remove on a
-    # nonexistent file.
-    FileNotFoundError = OSError
-
 # Some tests take too long on the AWS jobstore and are unquitable for CI.  They can be
 # be run during manual tests by setting this to False.
 testingIsAutomatic = True
@@ -63,7 +50,7 @@ class hidden(object):
     Hiding the abstract test classes from the Unittest loader so it can be inherited in different
     test suites for the different job stores.
     """
-    class AbstractFileStoreTest(with_metaclass(ABCMeta, ToilTest)):
+    class AbstractFileStoreTest(ToilTest, metaclass=ABCMeta):
         """
         An abstract base class for testing the various general functions described in
         :class:toil.fileStores.abstractFileStore.AbstractFileStore
@@ -268,7 +255,7 @@ class hidden(object):
 
             return job.fileStore.writeGlobalFile(testFile.name), testFile
 
-    class AbstractNonCachingFileStoreTest(with_metaclass(ABCMeta, AbstractFileStoreTest)):
+    class AbstractNonCachingFileStoreTest(AbstractFileStoreTest, metaclass=ABCMeta):
         """
         Abstract tests for the the various functions in
         :class:toil.fileStores.nonCachingFileStore.NonCachingFileStore. These
@@ -280,7 +267,7 @@ class hidden(object):
             super(hidden.AbstractNonCachingFileStoreTest, self).setUp()
             self.options.disableCaching = True
 
-    class AbstractCachingFileStoreTest(with_metaclass(ABCMeta, AbstractFileStoreTest)):
+    class AbstractCachingFileStoreTest(AbstractFileStoreTest, metaclass=ABCMeta):
         """
         Abstract tests for the the various cache-related functions in
         :class:toil.fileStores.cachingFileStore.CachingFileStore.

@@ -11,12 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from __future__ import absolute_import, print_function
-from future import standard_library
-standard_library.install_aliases()
-from builtins import str
-from builtins import map
-from builtins import filter
 import argparse
 import base64
 from contextlib import contextmanager

@@ -15,7 +15,6 @@
 A simple user script for Toil
 """
 
-from __future__ import absolute_import
 import argparse
 from toil.common import Toil
 from toil.job import Job

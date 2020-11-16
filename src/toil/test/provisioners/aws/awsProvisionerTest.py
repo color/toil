@@ -20,9 +20,6 @@ from textwrap import dedent
 from uuid import uuid4
 
 import pytest
-from builtins import next
-from builtins import range
-from builtins import str
 
 import subprocess
 from toil.provisioners import clusterFactory

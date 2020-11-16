@@ -12,11 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
-from builtins import range
 import os
-
-# Python 3 compatibility imports
 
 from toil.job import Job
 from toil.test import ToilTest, slow

@@ -12,11 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
-from __future__ import division
-from builtins import str
-from past.utils import old_div
-from future.utils import listitems
 import logging
 import os
 import re
@@ -26,9 +21,7 @@ import tempfile
 import time
 from threading import Thread
 
-# Python 3 compatibility imports
-from six.moves.queue import Empty, Queue
-from six import itervalues
+from queue import Empty, Queue
 
 from toil.lib.iterables import concat
 from shutil import which
@@ -138,7 +131,7 @@ class ParasolBatchSystem(BatchSystemSupport):
         self.checkResourceRequest(jobDesc.memory, jobDesc.cores, jobDesc.disk)
 
         MiB = 1 << 20
-        truncatedMemory = (old_div(jobDesc.memory, MiB)) * MiB
+        truncatedMemory = jobDesc.memory // MiB * MiB
         # Look for a batch for jobs with these resource requirements, with
         # the memory rounded down to the nearest megabyte. Rounding down
         # meams the new job can't ever decrease the memory requirements
@@ -196,7 +189,7 @@ class ParasolBatchSystem(BatchSystemSupport):
         return super(ParasolBatchSystem, self).setEnv(name, value)
 
     def __environment(self):
-        return (k + '=' + (os.environ[k] if v is None else v) for k, v in listitems(self.environment))
+        return (k + '=' + (os.environ[k] if v is None else v) for k, v in list(self.environment.items()))
 
     def killBatchJobs(self, jobIDs):
         """Kills the given jobs, represented as Job ids, then checks they are dead by checking
@@ -241,7 +234,7 @@ class ParasolBatchSystem(BatchSystemSupport):
         created by other users.
         """
         issuedJobs = set()
-        for resultsFile in itervalues(self.resultsFiles):
+        for resultsFile in self.resultsFiles.values():
             issuedJobs.update(self.getJobIDsForResultsFile(resultsFile))
 
         return list(issuedJobs)
@@ -351,7 +344,7 @@ class ParasolBatchSystem(BatchSystemSupport):
 
     def shutdown(self):
         self.killBatchJobs(self.getIssuedBatchJobIDs())  # cleanup jobs
-        for results in itervalues(self.resultsFiles):
+        for results in self.resultsFiles.values():
             exitValue = self._runParasol(['-results=' + results, 'clear', 'sick'],
                                          autoRetry=False)[0]
             if exitValue is not None:

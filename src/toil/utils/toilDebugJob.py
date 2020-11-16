@@ -15,7 +15,6 @@
 """Debug tool for running a toil job locally.
 """
 
-from __future__ import absolute_import
 import logging
 
 from toil.lib.bioio import getBasicOptionParser

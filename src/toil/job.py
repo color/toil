@@ -12,13 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import, print_function
 
-from future import standard_library
-standard_library.install_aliases()
-from builtins import zip
-from builtins import map
-from builtins import str
 import collections
 import copy
 import importlib
@@ -26,37 +20,28 @@ import inspect
 import itertools
 import logging
 import os
+import pickle
 import shutil
 import sys
-import time
-import dill
 import tempfile
+import time
 
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
+import dill
 
+import uuid
 from abc import ABCMeta, abstractmethod
-from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
+from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
 from contextlib import contextmanager
 from io import BytesIO
-import uuid
 
-# Python 3 compatibility imports
-from six import iteritems, string_types
-
-from toil.lib.expando import Expando
-from toil.lib.humanize import human2bytes
-
-from toil.common import Toil, addOptions, safeUnpickleFromStream, Config
+from toil.common import Config, Toil, addOptions, safeUnpickleFromStream
 from toil.deferred import DeferredFunction
 from toil.fileStores import FileID
-from toil.lib.bioio import (setLoggingFromOptions,
-                            getTotalCpuTimeAndMemoryUsage,
-                            getTotalCpuTime)
+from toil.lib.bioio import (getTotalCpuTime, getTotalCpuTimeAndMemoryUsage,
+                            setLoggingFromOptions)
+from toil.lib.expando import Expando
+from toil.lib.humanize import human2bytes
 from toil.resource import ModuleDescriptor
-from future.utils import with_metaclass
 
 logger = logging.getLogger( __name__ )
 
@@ -738,7 +723,7 @@ class JobDescription(Requirer):
         
         # Avoid potential circular imports
         from toil.batchSystems.abstractBatchSystem import BatchJobExitReason
-        
+
         # Old version of this function used to take a config. Make sure that isn't happening.
         assert not isinstance(exitReason, Config), "Passing a Config as an exit reason"
         # Make sure we have an assigned config.
@@ -1750,7 +1735,7 @@ class Job:
                 else:
                     return toil.restart()
 
-    class Service(with_metaclass(ABCMeta, Requirer)):
+    class Service(Requirer, metaclass=ABCMeta):
         """
         Abstract class used to define the interface to a service.
         
@@ -1882,7 +1867,7 @@ class Job:
         """
         Sets the values for promises using the return values from this job's run() function.
         """
-        for path, promiseFileStoreIDs in iteritems(self._rvs):
+        for path, promiseFileStoreIDs in self._rvs.items():
             if not path:
                 # Note that its possible for returnValues to be a promise, not an actual return
                 # value. This is the case if the job returns a promise from another job. In
@@ -2431,10 +2416,7 @@ class FunctionWrappingJob(Job):
         """
         # Use the user-specified requirements, if specified, else grab the default argument
         # from the function, if specified, else default to None
-        if sys.version_info >= (3, 0):
-            argSpec = inspect.getfullargspec(userFunction)
-        else:
-            argSpec = inspect.getargspec(userFunction)
+        argSpec = inspect.getfullargspec(userFunction)
 
         if argSpec.defaults is None:
             argDict = {}
@@ -2453,7 +2435,7 @@ class FunctionWrappingJob(Job):
                     # ... and finally fall back to a default value.
                     value = default
             # Optionally, convert strings with metric or binary prefixes.
-            if dehumanize and isinstance(value, string_types):
+            if dehumanize and isinstance(value, str):
                 value = human2bytes(value)
             return value
 

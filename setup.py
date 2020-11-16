@@ -36,8 +36,6 @@ def runSetup():
     idna = 'idna>=2'
     pytz = 'pytz>=2012'
     dill = 'dill>=0.3.2, <0.4'
-    six = 'six>=1.10.0'
-    future = 'future'
     requests = 'requests>=2, <3'
     docker = 'docker==4.3.1'
     dateutil = 'python-dateutil'
@@ -46,8 +44,6 @@ def runSetup():
 
     core_reqs = [
         dill,
-        six,
-        future,
         requests,
         docker,
         dateutil,

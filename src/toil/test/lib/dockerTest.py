@@ -258,8 +258,7 @@ class DockerTest(ToilTest):
         A = Job.wrapJobFn(_testDockerPipeChainFn)
         rv = Job.Runner.startToil(A, options)
         logger.info('Container pipeline result: %s', repr(rv))
-        if sys.version_info >= (3, 0):
-            rv = rv.decode('utf-8')
+        rv = rv.decode('utf-8')
         assert rv.strip() == '2'
 
     def testDockerPipeChainErrorDetection(self, disableCaching=True):

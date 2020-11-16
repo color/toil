@@ -12,18 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
 
-from builtins import str
 from datetime import datetime
 import logging
 import time
 from threading import Thread, Lock
 from abc import ABCMeta, abstractmethod
 
-# Python 3 compatibility imports
-from six.moves.queue import Empty, Queue
-from future.utils import with_metaclass
+from queue import Empty, Queue
 
 from toil.lib.misc import CalledProcessErrorStderr
 from toil.lib.objects import abstractclassmethod
@@ -39,7 +35,7 @@ class AbstractGridEngineBatchSystem(BatchSystemCleanupSupport):
     standard HPC cluster. By default auto-deployment is not implemented.
     """
 
-    class Worker(with_metaclass(ABCMeta, Thread)):
+    class Worker(Thread, metaclass=ABCMeta):
 
         def __init__(self, newJobsQueue, updatedJobsQueue, killQueue,
                      killedJobsQueue, boss):

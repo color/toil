@@ -11,8 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from six import iteritems
-
 import os
 import logging
 
@@ -189,9 +187,9 @@ class SynthesizeWDL:
 
     def write_main_wfdeclarations(self):
         main_section = ''
-        for wfname, wf in iteritems(self.workflows_dictionary):
+        for wfname, wf in self.workflows_dictionary.items():
             if 'wf_declarations' in wf:
-                for var, var_expressn in iteritems(wf['wf_declarations']):
+                for var, var_expressn in wf['wf_declarations'].items():
                     var_type = var_expressn['type']
 
                     # check the json file for the expression's value
@@ -339,7 +337,7 @@ class SynthesizeWDL:
 
         scatternamespace = []
 
-        for wfname, wf in iteritems(self.workflows_dictionary):
+        for wfname, wf in self.workflows_dictionary.items():
             if 'wf_declarations' in wf:
                 for var in wf['wf_declarations']:
                     scatternamespace.append(var)

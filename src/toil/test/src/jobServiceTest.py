@@ -11,16 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from __future__ import absolute_import, print_function
-from builtins import zip
-from builtins import map
-from builtins import range
 import codecs
 import os
 import random
 import traceback
-
-# Python 3 compatibility imports
 
 from toil.lib.bioio import getTempFile
 from toil.job import Job

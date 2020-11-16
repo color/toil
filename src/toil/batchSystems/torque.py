@@ -12,13 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
-from __future__ import division
-from builtins import str
-from past.utils import old_div
 import logging
 import os
 from pipes import quote
+from queue import Empty
 import time
 import math
 import shlex
@@ -160,8 +157,7 @@ class TorqueBatchSystem(AbstractGridEngineBatchSystem):
 
             reqline = list()
             if mem is not None:
-                memStr = str(old_div(mem, 1024)) + 'K'
-                reqline.append('mem=' + memStr)
+                reqline.append('mem={}K'.format(mem // 1024))
 
             if cpu is not None and math.ceil(cpu) > 1:
                 reqline.append('nodes=1:ppn=' + str(int(math.ceil(cpu))))

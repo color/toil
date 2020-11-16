@@ -17,11 +17,6 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-from __future__ import absolute_import
-from __future__ import division
-from builtins import str
-from builtins import range
-from past.utils import old_div
 import logging
 import math
 from toil.lib.misc import call_command
@@ -252,7 +247,7 @@ class LSFBatchSystem(AbstractGridEngineBatchSystem):
                     mem_resource = parse_memory_resource(mem)
                     mem_limit = parse_memory_limit(mem)
                 else:
-                    mem = old_div(float(mem), 1024**3)
+                    mem = float(mem) // 1024**3
                     mem_resource = parse_memory_resource(mem)
                     mem_limit = parse_memory_limit(mem)
 
@@ -334,7 +329,7 @@ class LSFBatchSystem(AbstractGridEngineBatchSystem):
                 MemoryString(items[mem_index]) > maxMEM):
                 maxMEM = MemoryString(items[mem_index])
 
-        if maxCPU is 0 or maxMEM is 0:
+        if maxCPU == 0 or maxMEM == 0:
                 raise RuntimeError("lshosts returns null ncpus or maxmem info")
         logger.debug("Got the maxMEM: {}".format(maxMEM))
         logger.debug("Got the maxCPU: {}".format(maxCPU))

@@ -12,16 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
-from __future__ import division
-
-from future import standard_library
-
-standard_library.install_aliases()
-from builtins import range
-from builtins import str
-from past.utils import old_div
-from builtins import object
 import socketserver
 import pytest
 import hashlib
@@ -37,11 +27,11 @@ from stubserver import FTPStubServer
 from abc import abstractmethod, ABCMeta
 from itertools import chain, islice
 from threading import Thread
-from six.moves.queue import Queue
-from six.moves import SimpleHTTPServer, StringIO
-from six import iteritems
-import six.moves.urllib.parse as urlparse
-from six.moves.urllib.request import urlopen, Request
+from queue import Queue
+import http
+from io import StringIO
+import urllib.parse as urlparse
+from urllib.request import urlopen, Request
 
 from toil.lib.memoize import memoize
 from toil.lib.exceptions import panic
@@ -62,7 +52,6 @@ from toil.test import (ToilTest,
                        needs_google,
                        travis_test,
                        slow)
-from future.utils import with_metaclass
 
 # Need googleRetry decorator even if google is not available, so make one up.
 # Unconventional use of decorator to determine if google is enabled by seeing if
@@ -88,7 +77,7 @@ class AbstractJobStoreTest(object):
     http://stackoverflow.com/questions/1323455/python-unit-test-with-base-and-sub-class#answer-25695512
     """
 
-    class Test(with_metaclass(ABCMeta, ToilTest)):
+    class Test(ToilTest, metaclass=ABCMeta):
         @classmethod
         def setUpClass(cls):
             super(AbstractJobStoreTest.Test, cls).setUpClass()
@@ -373,9 +362,7 @@ class AbstractJobStoreTest(object):
             jobstore1 = self.jobstore_initialized
             jobstore2 = self.jobstore_resumed_noconfig
 
-            bar = 'bar'
-            if sys.version_info >= (3, 0):
-                bar = b'bar'
+            bar = b'bar'
 
             with jobstore1.writeSharedFileStream('foo') as f:
                 f.write(bar)
@@ -409,13 +396,9 @@ class AbstractJobStoreTest(object):
             # Check file exists
             self.assertTrue(jobstore2.fileExists(fileOne))
             self.assertTrue(jobstore1.fileExists(fileOne))
-            one = 'one'
-            two = 'two'
-            three = 'three'
-            if sys.version_info >= (3, 0):
-                one = b'one'
-                two = b'two'
-                three = b'three'
+            one = b'one'
+            two = b'two'
+            three = b'three'
             # ... write to the file on jobstore2, ...
             with jobstore2.updateFileStream(fileOne) as f:
                 f.write(one)
@@ -626,7 +609,7 @@ class AbstractJobStoreTest(object):
 
         @classmethod
         def cleanUpExternalStores(cls):
-            for test, store in iteritems(cls.externalStoreCache):
+            for test, store in cls.externalStoreCache.items():
                 logger.debug('Cleaning up external store for %s.', test)
                 test._cleanUpExternalStore(store)
 
@@ -989,9 +972,7 @@ class AbstractJobStoreTest(object):
                 # but this gives us a lot of extra room just to be sure.
 
                 # python 3 requires self.fileContents to be a bytestring
-                a = 'a'
-                if sys.version_info >= (3, 0):
-                    a = b'a'
+                a = b'a'
                 f.write(a * 300000)
             with self.jobstore_initialized.readFileStream(fileID) as f:
                 self.assertEqual(f.read(1), a)
@@ -1050,7 +1031,7 @@ class AbstractJobStoreTest(object):
 
 class AbstractEncryptedJobStoreTest(object):
     # noinspection PyAbstractClass
-    class Test(with_metaclass(ABCMeta, AbstractJobStoreTest.Test)):
+    class Test(AbstractJobStoreTest.Test, metaclass=ABCMeta):
         """
         A test of job stores that use encryption
         """
@@ -1270,7 +1251,7 @@ class AWSJobStoreTest(AbstractJobStoreTest.Test):
         jobstore = self.jobstore_initialized
         for encrypted in (True, False):
             n = AWSJobStore.FileInfo.maxInlinedSize()
-            sizes = (1, old_div(n, 2), n - 1, n, n + 1, 2 * n)
+            sizes = (1, n // 2, n - 1, n, n + 1, 2 * n)
             for size in chain(sizes, islice(reversed(sizes), 1)):
                 s = os.urandom(size)
                 with jobstore.writeSharedFileStream('foo') as f:
@@ -1366,7 +1347,7 @@ class EncryptedAWSJobStoreTest(AWSJobStoreTest, AbstractEncryptedJobStoreTest.Te
     pass
 
 
-class StubHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+class StubHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     fileContents = 'A good programmer looks both ways before crossing a one-way street'
 
     def do_GET(self):
@@ -1374,9 +1355,7 @@ class StubHttpRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         self.send_header("Content-type", "text/plain")
         self.send_header("Content-length", len(self.fileContents))
         self.end_headers()
-        # python 3 requires self.fileContents to be a bytestring
-        if sys.version_info >= (3, 0):
-            self.fileContents = self.fileContents.encode('utf-8')
+        self.fileContents = self.fileContents.encode('utf-8')
         self.wfile.write(self.fileContents)
 
 

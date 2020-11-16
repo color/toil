@@ -1,5 +1,4 @@
 # coding=utf-8
-from six import iteritems
 import json
 import os
 import re
@@ -550,7 +549,7 @@ class Context(object):
             delete_policy(entity_name, policy_name)
 
         # Create expected policies
-        for policy_name, policy in iteritems(policies):
+        for policy_name, policy in policies.items():
             current_policy = None
             try:
                 current_policy = json.loads(unquote(

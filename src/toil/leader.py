@@ -15,14 +15,7 @@
 """
 The leader script (of the leader/worker pair) for running jobs.
 """
-from __future__ import absolute_import
-from __future__ import division
 
-from future import standard_library
-standard_library.install_aliases()
-from builtins import str
-from builtins import object
-from builtins import super
 import base64
 import logging
 import time

@@ -12,11 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import, print_function
-from __future__ import division
-from builtins import range
-from builtins import object
-from past.utils import old_div
 import os
 import logging
 import time
@@ -56,7 +51,7 @@ class hidden(object):
                                      cores=1, memory='1M', disk='1M')
                 values = Job.Runner.startToil(root, self.getOptions(tempDir))
                 maxValue = max(values)
-                self.assertEqual(maxValue, old_div(self.cpuCount, coresPerJob))
+                self.assertEqual(maxValue, self.cpuCount // coresPerJob)
 
         @slow
         def testConcurrencyStatic(self):
@@ -80,7 +75,7 @@ class hidden(object):
                                                 disk='1M'))
                 Job.Runner.startToil(root, self.getOptions(tempDir))
                 _, maxValue = batchSystemTest.getCounters(counterPath)
-                self.assertEqual(maxValue, old_div(self.cpuCount, coresPerJob))
+                self.assertEqual(maxValue, self.cpuCount // coresPerJob)
 
         def getOptions(self, tempDir, caching=True):
             options = super(hidden.AbstractPromisedRequirementsTest, self).getOptions(tempDir)

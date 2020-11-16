@@ -12,11 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
-from __future__ import print_function
 
-from builtins import str
-from builtins import object
 from abc import ABCMeta
 from uuid import uuid4
 
@@ -30,14 +26,11 @@ import os
 import signal
 import time
 
-# Python 3 compatibility imports
-from future.utils import with_metaclass
-
 # Some tests take too long on the AWS jobstore and are unquitable for CI.  They can be
 # be run during manual tests by setting this to False.
 testingIsAutomatic = True
 
-class DeferredFunctionTest(with_metaclass(ABCMeta, ToilTest)):
+class DeferredFunctionTest(ToilTest, metaclass=ABCMeta):
     """
     Test the deferred function system.
     """

@@ -18,9 +18,8 @@ from difflib import get_close_matches
 from operator import attrgetter
 import datetime
 from toil.lib.misc import std_dev, mean
-from six import string_types
-from six.moves.urllib.request import urlopen
-from six.moves.urllib.error import URLError
+from urllib.request import urlopen
+from urllib.error import URLError
 
 logger = logging.getLogger(__name__)
 
@@ -217,7 +216,7 @@ def checkValidNodeTypes(provisioner, nodeTypes):
         return
     if not isinstance(nodeTypes, list):
         nodeTypes = [nodeTypes]
-    if not isinstance(nodeTypes[0], string_types):
+    if not isinstance(nodeTypes[0], str):
         return
     # check if a valid node type for aws
     from toil.lib.generatedEC2Lists import E2Instances, regionDict

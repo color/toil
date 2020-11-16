@@ -44,7 +44,6 @@
 ################################################################################
 import re
 import base64
-from builtins import chr
 from collections import OrderedDict
 # Common Code #
 def parse_tree_string(parsetree, indent=None, b64_source=True, indent_level=0, debug=False):

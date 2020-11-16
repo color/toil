@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from builtins import map
 import errno
 import hashlib
 import importlib
@@ -28,7 +27,7 @@ from pydoc import locate
 from tempfile import mkdtemp
 from urllib.error import HTTPError
 from zipfile import ZipFile
-from six.moves.urllib.request import urlopen
+from urllib.request import urlopen
 
 from toil.lib.retry import retry, ErrorCondition
 from toil.lib.memoize import strict_bool

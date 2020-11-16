@@ -14,9 +14,6 @@
 
 # 5.14.2018: copied into Toil from https://github.com/BD2KGenomics/bd2k-python-lib
 
-from __future__ import absolute_import
-from future.utils import raise_
-from builtins import range
 import atexit
 import fcntl
 import logging
@@ -32,6 +29,7 @@ from threading import BoundedSemaphore
 import psutil
 
 from toil.lib.misc import robust_rmtree
+from toil.lib.exceptions import raise_
 
 log = logging.getLogger(__name__)
 
@@ -92,9 +90,9 @@ class ExceptionalThread(threading.Thread):
     def join( self, *args, **kwargs ):
         super( ExceptionalThread, self ).join( *args, **kwargs )
         if not self.is_alive( ) and self.exc_info is not None:
-            type, value, traceback = self.exc_info
+            exc_type, exc_value, traceback = self.exc_info
             self.exc_info = None
-            raise_(type, value, traceback)
+            raise_(exc_type, exc_value, traceback)
 
 
 # noinspection PyPep8Naming

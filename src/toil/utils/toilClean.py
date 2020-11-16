@@ -14,7 +14,6 @@
 """
 Delete the job store used by a previous Toil workflow invocation
 """
-from __future__ import absolute_import
 import logging
 
 from toil.lib.bioio import getBasicOptionParser

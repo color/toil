@@ -12,13 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import, print_function
 
-from future import standard_library
-
-standard_library.install_aliases()
-from builtins import map
-from builtins import str
 from collections import defaultdict
 from contextlib import contextmanager
 import dill

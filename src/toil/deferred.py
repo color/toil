@@ -12,12 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import, print_function
-from future import standard_library
-standard_library.install_aliases()
-from builtins import map
-from builtins import str
-from builtins import object
 from collections import namedtuple
 from contextlib import contextmanager
 

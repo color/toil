@@ -20,7 +20,6 @@ import logging
 import urllib.request
 import boto.ec2
 
-from six import iteritems, text_type
 from functools import wraps
 from boto.ec2.blockdevicemapping import BlockDeviceMapping, BlockDeviceType
 from boto.exception import BotoServerError, EC2ResponseError
@@ -181,7 +180,7 @@ class AWSProvisioner(AbstractProvisioner):
 
         self._masterPublicKey = 'AAAAB3NzaC1yc2Enoauthorizedkeyneeded' # dummy key
         userData = self._getCloudConfigUserData('leader', self._masterPublicKey)
-        if isinstance(userData, text_type):
+        if isinstance(userData, str):
             # Spot-market provisioning requires bytes for user data.
             # We probably won't have a spot-market leader, but who knows!
             userData = userData.encode('utf-8')
@@ -318,7 +317,7 @@ class AWSProvisioner(AbstractProvisioner):
 
         keyPath = self._sseKey if self._sseKey else None
         userData = self._getCloudConfigUserData('worker', self._masterPublicKey, keyPath, preemptable)
-        if isinstance(userData, text_type):
+        if isinstance(userData, str):
             # Spot-market provisioning requires bytes for user data.
             userData = userData.encode('utf-8')
         sgs = [sg for sg in self._ctx.ec2.get_all_security_groups() if sg.name in self._leaderSecurityGroupNames]
@@ -493,7 +492,7 @@ class AWSProvisioner(AbstractProvisioner):
     @classmethod
     def _addTags(cls, instances, tags):
         for instance in instances:
-            for key, value in iteritems(tags):
+            for key, value in tags.items():
                 cls._addTag(instance, key, value)
 
     @classmethod

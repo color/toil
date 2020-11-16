@@ -11,20 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from __future__ import absolute_import, print_function
-from __future__ import division
-from builtins import chr
-from builtins import map
-from builtins import str
-from builtins import range
-from past.utils import old_div
 import collections
 import unittest
 import logging
 import os
 import random
-
-# Python 3 compatibility imports
 
 from toil.common import Toil
 from toil.leader import FailedJobsException
@@ -468,7 +459,7 @@ class JobTest(ToilTest):
         referring to nodes and the edge is from a to b.
         """
         # Pick number of total edges to create
-        edgeNumber = random.choice(range(nodeNumber - 1, 1 + old_div((nodeNumber * (nodeNumber - 1)), 2)))
+        edgeNumber = random.choice(range(nodeNumber - 1, 1 + (nodeNumber * (nodeNumber - 1) // 2)))
         # Make a spanning tree of edges so that nodes are connected
         edges = set([(random.choice(range(i)), i) for i in range(1, nodeNumber)])
         # Add extra random edges until there are edgeNumber edges

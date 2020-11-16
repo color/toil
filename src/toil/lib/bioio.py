@@ -12,10 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
 
-from builtins import range
-from builtins import object
 import os
 import logging
 import resource
@@ -25,8 +22,6 @@ import random
 from argparse import ArgumentParser
 import subprocess
 
-# Python 3 compatibility imports
-from six import string_types
 
 from xml.dom import minidom  # For making stuff pretty
 
@@ -176,7 +171,7 @@ def system(command):
     :type command: str | sequence[string]
     """
     logger.debug('Running: %r', command)
-    subprocess.check_call(command, shell=isinstance(command, string_types), bufsize=-1)
+    subprocess.check_call(command, shell=isinstance(command, str), bufsize=-1)
 
 def getTotalCpuTimeAndMemoryUsage():
     """

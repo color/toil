@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import, print_function
 from toil.test import ToilTest, needs_appliance
 from toil import checkDockerImageExists, parseDockerAppliance
 from docker.errors import ImageNotFound

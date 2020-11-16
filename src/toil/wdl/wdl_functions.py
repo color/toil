@@ -615,16 +615,15 @@ def select_first(values):
 
 
 def combine_dicts(dict1, dict2):
-    from six import iteritems
     combineddict= {}
-    for k, v in iteritems(dict1):
+    for k, v in dict1.items():
         counter1 = 0
         while isinstance(v, list):
             counter1 += 1
             v = v[0]
         break
 
-    for k, v in iteritems(dict2):
+    for k, v in dict2.items():
         counter2 = 0
         while isinstance(v, list):
             counter2 += 1
