@@ -21,7 +21,6 @@ import types
 import itertools
 import errno
 
-<<<<<<< HEAD
 from ssl import SSLError
 from six import iteritems
 
@@ -30,17 +29,11 @@ from toil.lib.compatibility import compat_oldstr, compat_bytes, USING_PYTHON2
 from toil.lib.retry import old_retry
 from boto.exception import (SDBResponseError,
                             BotoServerError,
+                            SDBResponseError,
                             S3ResponseError,
                             S3CreateError,
                             S3CopyError)
-=======
-from boto.exception import (
-    BotoServerError,
-    SDBResponseError,
-    S3ResponseError
-)
 from boto3.s3.transfer import TransferConfig
->>>>>>> 9c081f20... Retry only.
 from botocore.exceptions import ClientError
 import boto3
 import boto3.s3.transfer
