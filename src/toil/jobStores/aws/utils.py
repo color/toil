@@ -29,9 +29,11 @@ from toil.lib.compatibility import compat_oldstr, compat_bytes, USING_PYTHON2
 from toil.lib.retry import old_retry
 from boto.exception import (SDBResponseError,
                             BotoServerError,
+                            SDBResponseError,
                             S3ResponseError,
                             S3CreateError,
                             S3CopyError)
+from boto3.s3.transfer import TransferConfig
 from botocore.exceptions import ClientError
 import boto3
 import boto3.s3.transfer
@@ -349,18 +351,35 @@ def retryable_sdb_errors(e):
 
 def retry_sdb(delays=default_delays, timeout=default_timeout, predicate=retryable_sdb_errors):
     return old_retry(delays=delays, timeout=timeout, predicate=predicate)
+# https://github.com/boto/botocore/blob/49f87350d54f55b687969ec8bf204df785975077/botocore/retries/standard.py#L316
+THROTTLED_ERROR_CODES = [
+        'Throttling',
+        'ThrottlingException',
+        'ThrottledException',
+        'RequestThrottledException',
+        'TooManyRequestsException',
+        'ProvisionedThroughputExceededException',
+        'TransactionInProgressException',
+        'RequestLimitExceeded',
+        'BandwidthLimitExceeded',
+        'LimitExceededException',
+        'RequestThrottled',
+        'SlowDown',
+        'PriorRequestNotComplete',
+        'EC2ThrottledException',
+]
 
 
+# TODO: Replace with: @retry and ErrorCondition
 def retryable_s3_errors(e):
-    return ((isinstance(e, (S3CreateError, S3ResponseError))
-             and e.status == 409
-             and 'try again' in e.message)
-            or connection_reset(e)
-            or (isinstance(e, BotoServerError) and e.status == 500)
-            # Throttling response sometimes received on bucket creation
-            or (isinstance(e, BotoServerError) and e.status == 503 and e.code == 'SlowDown')
-            or (isinstance(e, S3CopyError) and 'try again' in e.message)
-            or (isinstance(e, ClientError) and 'BucketNotEmpty' in str(e)))
+    return    (connection_reset(e)
+            or (isinstance(e, BotoServerError) and e.status in (429, 500))
+            or (isinstance(e, BotoServerError) and e.code in THROTTLED_ERROR_CODES)
+            # boto3 errors
+            or (isinstance(e, S3ResponseError) and e.error_code in THROTTLED_ERROR_CODES)
+            or (isinstance(e, ClientError) and 'BucketNotEmpty' in str(e))
+            or (isinstance(e, ClientError) and e.response.get('ResponseMetadata', {}).get('HTTPStatusCode') == 409 and 'try again' in str(e))
+            or (isinstance(e, ClientError) and e.response.get('ResponseMetadata', {}).get('HTTPStatusCode') in (404, 429, 500, 502, 503, 504)))
 
 
 def retry_s3(delays=default_delays, timeout=default_timeout, predicate=retryable_s3_errors):
